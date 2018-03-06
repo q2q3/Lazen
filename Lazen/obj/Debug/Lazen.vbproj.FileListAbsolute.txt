@@ -1,0 +1,23 @@
+C:\Users\jomtek360\AppData\Local\Temporary Projects\Lazen\bin\Debug\Lazen.exe.config
+C:\Users\jomtek360\Documents\Visual Studio 2015\Projects\Lazen\Lazen\bin\Debug\Lazen.exe.config
+C:\Users\jomtek360\Documents\Visual Studio 2015\Projects\Lazen\Lazen\bin\Debug\Lazen.exe
+C:\Users\jomtek360\Documents\Visual Studio 2015\Projects\Lazen\Lazen\bin\Debug\Lazen.pdb
+C:\Users\jomtek360\Documents\Visual Studio 2015\Projects\Lazen\Lazen\bin\Debug\Lazen.xml
+C:\Users\jomtek360\Documents\Visual Studio 2015\Projects\Lazen\Lazen\obj\Debug\Lazen.vbprojResolveAssemblyReference.cache
+C:\Users\jomtek360\Documents\Visual Studio 2015\Projects\Lazen\Lazen\obj\Debug\Lazen.Form1.resources
+C:\Users\jomtek360\Documents\Visual Studio 2015\Projects\Lazen\Lazen\obj\Debug\Lazen.Resources.resources
+C:\Users\jomtek360\Documents\Visual Studio 2015\Projects\Lazen\Lazen\obj\Debug\Lazen.vbproj.GenerateResource.Cache
+C:\Users\jomtek360\Documents\Visual Studio 2015\Projects\Lazen\Lazen\obj\Debug\Lazen.exe
+C:\Users\jomtek360\Documents\Visual Studio 2015\Projects\Lazen\Lazen\obj\Debug\Lazen.xml
+C:\Users\jomtek360\Documents\Visual Studio 2015\Projects\Lazen\Lazen\obj\Debug\Lazen.pdb
+E:\Lazen\Lazen\bin\Debug\Lazen.exe.config
+E:\Lazen\Lazen\obj\Debug\Lazen.exe
+E:\Lazen\Lazen\obj\Debug\Lazen.xml
+E:\Lazen\Lazen\obj\Debug\Lazen.pdb
+E:\Lazen\Lazen\bin\Debug\Lazen.exe
+E:\Lazen\Lazen\bin\Debug\Lazen.pdb
+E:\Lazen\Lazen\bin\Debug\Lazen.xml
+E:\Lazen\Lazen\obj\Debug\Lazen.vbprojResolveAssemblyReference.cache
+E:\Lazen\Lazen\obj\Debug\Lazen.Form1.resources
+E:\Lazen\Lazen\obj\Debug\Lazen.Resources.resources
+E:\Lazen\Lazen\obj\Debug\Lazen.vbproj.GenerateResource.Cache
