@@ -25,5 +25,5 @@
 
 <h1>Advanced Change-log</h1>
 
-♦ 07/03/2018 | Variable Modification Added<br>
-♦ 07/03/2018 | Functions With Arguments Added<br>
+♦ 03/07/2018 | Variable Modification Added<br>
+♦ 03/07/2018 | Functions With Arguments Added<br>
