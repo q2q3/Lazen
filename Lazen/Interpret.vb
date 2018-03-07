@@ -1,4 +1,4 @@
-﻿Public Class Interpret
+Public Class Interpret
     Public Shared UsedFunctionsListBox As New ListBox
     Public Shared UsedFunctionsInConditions As New ListBox
     Public Shared UsedLinesForFunctions As New ListBox
@@ -102,21 +102,33 @@
         End If
 
 
+        If line.ToLower.Contains("(") AndAlso line.ToLower.Contains(")") AndAlso line.ToLower.Contains(":=") Then
+            Dim varname = ""
+            Dim varclasser = ""
+            Dim varnewvalue = ""
+            Dim splitDelimiterFirst = FormatConverters.removeSpacesAtBeginningAndEnd(FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(0, FormatConverters.removeSpacesAtBeginningAndEnd(line).IndexOf(":=")))
+            Dim splitDelimiterSecond = FormatConverters.removeSpacesAtBeginningAndEnd(FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(FormatConverters.removeSpacesAtBeginningAndEnd(line).ToLower.IndexOf(":=") + 2))
+            Try
+                varname = splitDelimiterFirst.Substring(0, splitDelimiterFirst.IndexOf("(")).ToLower
+                varclasser = FormatConverters.removeSpacesAtBeginningAndEnd(FormatConverters.ConvertToAbleToRead(splitDelimiterFirst.Substring(splitDelimiterFirst.IndexOf("(") + 1))).ToLower
+                If Variables.ClasserExists(varclasser.ToLower) Then
 
-        If FormatConverters.removeSpacesAtBeginningAndEnd(line).ToLower.StartsWith("editvariable") Then
+                    varnewvalue = FormatConverters.getExpression(splitDelimiterSecond)
+
+                    If Variables.VariableExists(varname, varclasser) Then
+                        Variables.EditVariable(varname, varnewvalue, varclasser)
+                    Else
+                        'pup error cause variable doesn't exists
+                    End If
+
+                    '    MsgBox("varnewvalue: " & varnewvalue)
+                Else
+                        'pup error cause classer doesn't exists
+                    End If
+            Catch ex As Exception
+
+            End Try
             'editvariable(varaiblename;;classer :: newvalue);
-            Dim splitFormatConverters = FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(12)
-            Dim splitFormatConvertToAbleToRead = FormatConverters.ConvertToAbleToRead(splitFormatConverters)
-            Dim patronvariableclasser = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(splitFormatConvertToAbleToRead.Split("::")(0)))
-            Dim variablename = FormatConverters.getClasserAndVariableDelimited(patronvariableclasser, "variable")
-            Dim variableNewValue = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(splitFormatConvertToAbleToRead.Split("::")(2)))
-            Dim variableClasser = FormatConverters.getClasserAndVariableDelimited(patronvariableclasser, "classer")
-            If Not patronvariableclasser.Contains(";;") Then
-                'error cause variable doesn't contains a classer
-                'Exit Sub
-            End If
-            Variables.EditVariable(variablename, variableNewValue, variableClasser)
-
         End If
     End Sub
     Shared linenumber = 0
