@@ -179,15 +179,87 @@ Public Class FormatConverters
                     If Not Functions.listOfFunctionsNames.Items.Contains(getFunctionCallName) Then
                         finalOutput += IntegratedFunctions.getFunctionCall(realI)
                     Else
-                        Dim getIndexToSearch = Functions.listOfFunctionsNames.Items(getFunctionCallName.ToLower)
+                        Dim getIndexToSearch = Functions.listOfFunctionsNames.Items.IndexOf(getFunctionCallName.ToLower)
                         Dim code = Functions.listOfFunctionsCodes.Items(getIndexToSearch)
-                        If Functions.checkIfReturnsSomething(code) Then
+                        Dim getArguments = Functions.listOfFunctionsArguments.Items(getIndexToSearch)
+                        Dim realIWithoutArraySpecified = realI.Substring(1)
+                        Dim realISpecifiedArray = ""
+                        If realI.EndsWith("]") Then
+                            If realI.Contains("[") Then
+                                realISpecifiedArray = realI.Substring(realI.LastIndexOf("[")).Replace("[", "").Replace("]", "")
+                                realIWithoutArraySpecified = realI.Substring(1, realI.LastIndexOf("[") - 1)
+                            Else
+                                'pup error cause syntax error, remove ] at end of object
+                            End If
+                        End If
 
+
+
+                        'Dim realIAbleToRead = FormatConverters.ConvertToAbleToRead(realI)
+
+                        Dim getArgumentsByUser = FormatConverters.ConvertToAbleToRead(realIWithoutArraySpecified.Substring(realIWithoutArraySpecified.IndexOf("(")))
+                        Dim getArgumentsOfFunction = Functions.listOfFunctionsArguments.Items(getIndexToSearch)
+
+                        Dim listOfSplitArgsFunction As New List(Of String)
+
+                        For Each i5 In getArgumentsOfFunction.ToString.Split("::")
+                            If Not isNothingOrSpace(i5) Then
+                                listOfSplitArgsFunction.Add(i5)
+                            End If
+                        Next
+
+                        Dim countOfArgsByUser = 0
+                        For Each i4 As String In getArgumentsByUser.Split("::")
+                            If Not isNothingOrSpace(i4) Then
+                                Try
+                                    If countOfArgsByUser = listOfSplitArgsFunction.Count Then
+                                        'pup error cause too many arguments for the function
+                                        Exit Function
+                                    End If
+                                    Dim getExpressionOfI4 = getExpression(ConvertToAbleToRead(i4))
+                                        Dim getDistantVariable = FormatConverters.removeSpacesAtBeginningAndEnd(listOfSplitArgsFunction(countOfArgsByUser))
+
+
+                                        'MsgBox("variabletoedit: " & getDistantVariable)
+                                        ' MsgBox("newvalue: " & getExpressionOfI4)
+                                        'MsgBox("getfunctioncallname: " & getFunctionCallName)
+                                        Variables.EditVariable(getDistantVariable, getExpressionOfI4, getFunctionCallName)
+                                        countOfArgsByUser += 1
+
+                                Catch ex As IndexOutOfRangeException
+                                    'pup error cause arguments are missing for function
+                                    Exit Function
+                                End Try
+                            End If
+                        Next
+
+
+
+                        ' MsgBox("getargumentsbyuser: " & getArgumentsByUser)
+                        ' MsgBox("getargumentsoffunction: " & getArgumentsOfFunction)
+
+                        If Functions.checkIfReturnsSomething(code) Then
+                            Interpret.Start(code)
                         Else
                             'pup error cause function returns nothing
                         End If
-                        finalOutput += Functions.listOfFunctionReturns.Items(Functions.listOfFunctionNamesForReturn.Items.IndexOf(getFunctionCallName))
+
+                        Dim getReturnsList = Functions.listOfFunctionReturns.Items(Functions.listOfFunctionsNames.Items.IndexOf(getFunctionCallName.ToLower))
+                        If getReturnsList.ToString.EndsWith("µ") Then
+                            getReturnsList = getReturnsList.ToString.Substring(0, getReturnsList.ToString.Length - 1)
                         End If
+
+                        If IsNumeric(realISpecifiedArray) Then
+                            Try
+                                finalOutput += getReturnsList.ToString.Split("µ")(Long.Parse(realISpecifiedArray))
+                            Catch ex As IndexOutOfRangeException
+                                'pup error cause specified return array isn't existing
+                                Exit Function
+                            End Try
+                        Else
+                            finalOutput += getReturnsList.ToString.Split("µ")(0)
+                        End If
+                    End If
                         ElseIf realI.StartsWith("$") Then
                     'define(vc) b = "hello";
                     'print($salut;;dc)
