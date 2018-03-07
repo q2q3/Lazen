@@ -13,6 +13,7 @@
 ♦ Classers to sort your variables correctly<br>
 ♦ For Loops<br>
 ♦ Voids With Arguments<br>
+♦ Functions With Arguments<br>
 ♦ Maths Class Integrated<br>
 ♦ Date-Time Class Integrated<br>
 
@@ -25,3 +26,4 @@
 <h1>Advanced Change-log</h1>
 
 ♦ 07/03/2018 | Variable Modification Added<br>
+♦ 07/03/2018 | Functions With Arguments Added<br>
