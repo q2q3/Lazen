@@ -9,6 +9,7 @@
 ♦ And/Or Operators on Conditions<br>
 ♦ While Conditions<br>
 ♦ Variables<br>
+♦ Variable Modification<br>
 ♦ Classers to sort your variables correctly<br>
 ♦ For Loops<br>
 ♦ Voids With Arguments<br>
@@ -19,3 +20,8 @@
 
 <h1>Syntax</h1>
 <img src="http://image.noelshack.com/fichiers/2018/10/2/1520372927-capture.png"></img>
+
+
+<h1>Advanced Change-log</h1>
+
+♦ 07/03/2018 | Variable Modification Added<br>
