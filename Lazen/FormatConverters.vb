@@ -195,7 +195,12 @@ Public Class FormatConverters
                         Dim FunctionArgumentsList As New List(Of String)
 
                         'functionName = functionCallName
-                        Dim UserArguments As String = normalI.Substring(normalI.IndexOf("(") + 1, normalI.Substring(normalI.IndexOf("(")).LastIndexOf(")") - 1)
+                        Dim UserArguments As String
+                        If normalI.Replace(" ", "").EndsWith(")") Then
+                            UserArguments = normalI.Substring(normalI.IndexOf("(") + 1, normalI.Substring(normalI.IndexOf("(")).LastIndexOf(")") - 1)
+                        Else
+                            UserArguments = normalI.Substring(normalI.IndexOf("(") + 1)
+                        End If
                         Dim UserArgumentsList As New List(Of String)
 
                         For Each i2 As String In UserArguments.Split("::")
