@@ -27,3 +27,4 @@
 
 ♦ 03/07/2018 | Variable Modification Added<br>
 ♦ 03/07/2018 | Functions With Arguments Added<br>
+♦ 05/26/2018 | Functions Fixed Completly<br>
