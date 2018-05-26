@@ -3,7 +3,7 @@
 <h2>I'm very active on developping Lazen !</h2>
 <br>
 
-<h1>Change-log</h1>
+<h1>Functionnalities</h1>
 
 ♦ If Conditions<br>
 ♦ And/Or Operators on Conditions<br>
@@ -23,7 +23,7 @@
 <img src="http://image.noelshack.com/fichiers/2018/10/2/1520372927-capture.png"></img>
 
 
-<h1>Advanced Change-log</h1>
+<h1>Change-log</h1>
 
 ♦ 03/07/2018 | Variable Modification Added<br>
 ♦ 03/07/2018 | Functions With Arguments Added<br>
