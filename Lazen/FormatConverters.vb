@@ -175,92 +175,65 @@ Public Class FormatConverters
                     Dim realIConvert = RemoveQuotes(realI)
                     finalOutput += realIConvert
                 ElseIf realI.StartsWith("&") Then
-                    Dim getFunctionCallName = FormatConverters.removeSpacesAtBeginningAndEnd(realI.Substring(1).Substring(0, realI.IndexOf("(") - 1)).ToLower
+                    Dim getFunctionCallName As String = FormatConverters.removeSpacesAtBeginningAndEnd(realI.Substring(1).Substring(0, realI.IndexOf("(") - 1)).ToLower
                     If Not Functions.listOfFunctionsNames.Items.Contains(getFunctionCallName) Then
                         finalOutput += IntegratedFunctions.getFunctionCall(realI)
                     Else
-                        Dim getIndexToSearch = Functions.listOfFunctionsNames.Items.IndexOf(getFunctionCallName.ToLower)
-                        Dim code = Functions.listOfFunctionsCodes.Items(getIndexToSearch)
-                        Dim getArguments = Functions.listOfFunctionsArguments.Items(getIndexToSearch)
-                        Dim realIWithoutArraySpecified = realI.Substring(1)
-                        Dim realISpecifiedArray = ""
-                        If realI.EndsWith("]") Then
-                            If realI.Contains("[") Then
-                                realISpecifiedArray = realI.Substring(realI.LastIndexOf("[")).Replace("[", "").Replace("]", "")
-                                realIWithoutArraySpecified = realI.Substring(1, realI.LastIndexOf("[") - 1)
-                            Else
-                                'pup error cause syntax error, remove ] at end of object
-                            End If
+                        'print(&myFunction(argument :: argument));
+
+                        Dim normalI As String = removeSpacesAtBeginningAndEnd(i).Substring(1)
+
+                        If Not normalI.Contains("(") AndAlso normalI.Contains(")") Then
+                            'pup error cause function call is wrongly built
+                            Exit Function
                         End If
 
+                        Dim FunctionIndex As Long = Functions.listOfFunctionsNames.Items.IndexOf(getFunctionCallName.ToLower).ToString
+                        Dim FunctionCode As String = Functions.listOfFunctionsCodes.Items(FunctionIndex).ToString.Replace(vbTab, "")
+                        Dim lineStartForCopy As String = Functions.lineStartForCopy.Items(FunctionIndex).ToString
+                        Dim FunctionArguments As String = Functions.listOfFunctionsArguments.Items(FunctionIndex).ToString.ToLower
+                        Dim FunctionArgumentsList As New List(Of String)
 
+                        'functionName = functionCallName
+                        Dim UserArguments As String = normalI.Substring(normalI.IndexOf("(") + 1, normalI.Substring(normalI.IndexOf("(")).LastIndexOf(")") - 1)
+                        Dim UserArgumentsList As New List(Of String)
 
-                        'Dim realIAbleToRead = FormatConverters.ConvertToAbleToRead(realI)
-
-                        Dim getArgumentsByUser = FormatConverters.ConvertToAbleToRead(realIWithoutArraySpecified.Substring(realIWithoutArraySpecified.IndexOf("(")))
-                        Dim getArgumentsOfFunction = Functions.listOfFunctionsArguments.Items(getIndexToSearch)
-
-                        Dim listOfSplitArgsFunction As New List(Of String)
-
-                        For Each i5 In getArgumentsOfFunction.ToString.Split("::")
-                            If Not isNothingOrSpace(i5) Then
-                                listOfSplitArgsFunction.Add(i5)
+                        For Each i2 As String In UserArguments.Split("::")
+                            If Not isNothingOrSpace(i2) Then
+                                UserArgumentsList.Add(removeSpacesAtBeginningAndEnd(i2))
                             End If
                         Next
 
-                        Dim countOfArgsByUser = 0
-                        For Each i4 As String In getArgumentsByUser.Split("::")
-                            If Not isNothingOrSpace(i4) Then
-                                Try
-                                    If countOfArgsByUser = listOfSplitArgsFunction.Count Then
-                                        'pup error cause too many arguments for the function
-                                        Exit Function
-                                    End If
-                                    Dim getExpressionOfI4 = getExpression(ConvertToAbleToRead(i4))
-                                        Dim getDistantVariable = FormatConverters.removeSpacesAtBeginningAndEnd(listOfSplitArgsFunction(countOfArgsByUser))
-
-
-                                        'MsgBox("variabletoedit: " & getDistantVariable)
-                                        ' MsgBox("newvalue: " & getExpressionOfI4)
-                                        'MsgBox("getfunctioncallname: " & getFunctionCallName)
-                                        Variables.EditVariable(getDistantVariable, getExpressionOfI4, getFunctionCallName)
-                                        countOfArgsByUser += 1
-
-                                Catch ex As IndexOutOfRangeException
-                                    'pup error cause arguments are missing for function
-                                    Exit Function
-                                End Try
+                        For Each i3 As String In FunctionArguments.Split("::")
+                            If Not isNothingOrSpace(i3) Then
+                                FunctionArgumentsList.Add(removeSpacesAtBeginningAndEnd(i3))
                             End If
                         Next
 
-
-
-                        ' MsgBox("getargumentsbyuser: " & getArgumentsByUser)
-                        ' MsgBox("getargumentsoffunction: " & getArgumentsOfFunction)
-
-                        If Functions.checkIfReturnsSomething(code) Then
-                            Interpret.Start(code)
-                        Else
-                            'pup error cause function returns nothing
+                        If Not FunctionArgumentsList.Count = UserArgumentsList.Count Then
+                            'pup error cause arguments are missing
+                            Exit Function
                         End If
 
-                        Dim getReturnsList = Functions.listOfFunctionReturns.Items(Functions.listOfFunctionsNames.Items.IndexOf(getFunctionCallName.ToLower))
-                        If getReturnsList.ToString.EndsWith("µ") Then
-                            getReturnsList = getReturnsList.ToString.Substring(0, getReturnsList.ToString.Length - 1)
-                        End If
+                        Dim counter As Integer = 0
 
-                        If IsNumeric(realISpecifiedArray) Then
-                            Try
-                                finalOutput += getReturnsList.ToString.Split("µ")(Long.Parse(realISpecifiedArray))
-                            Catch ex As IndexOutOfRangeException
-                                'pup error cause specified return array isn't existing
-                                Exit Function
-                            End Try
-                        Else
-                            finalOutput += getReturnsList.ToString.Split("µ")(0)
-                        End If
+                        For Each i4 As String In FunctionArgumentsList
+                            Variables.EditVariable(i4.ToLower, getExpression(UserArgumentsList(counter)), getFunctionCallName.ToLower)
+                            counter += 1
+                        Next
+
+                        '    MsgBox("functioncode: " & FunctionCode)
+                        '    MsgBox("linestart: " & lineStartForCopy)
+                        Interpret.Start(FunctionCode, True, Long.Parse(lineStartForCopy))
+
+                        Dim returnResult As String = Functions.listOfFunctionReturns.Items(FunctionIndex)
+
+                        finalOutput += returnResult
+                        '   hey("arg" :: "arg")
+
+                        'finalOutput += Variables.GetVariable(variableName, classer)
                     End If
-                        ElseIf realI.StartsWith("$") Then
+                ElseIf realI.StartsWith("$") Then
                     'define(vc) b = "hello";
                     'print($salut;;dc)
                     'print($salutations;;dc, "Est le spécimen de ", ##&Math.ComputeExpression("5 + ", "5 + ", "8"))

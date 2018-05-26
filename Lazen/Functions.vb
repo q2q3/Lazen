@@ -4,11 +4,14 @@
     Public Shared listOfFunctionsCodes As New ListBox
     Public Shared listOfFunctionNamesForReturn As New ListBox
     Public Shared listOfFunctionReturns As New ListBox
+    Public Shared listOfLines As New ListBox
+    Public Shared lineStartForCopy As New ListBox
     Public Shared Function start(line As String, linescounter As Long, code As String)
         If FormatConverters.removeSpacesAtBeginningAndEnd(line).ToLower.StartsWith("function") Then
             Dim getFunctionName = FormatConverters.removeSpacesAtBeginningAndEnd(FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(0, FormatConverters.removeSpacesAtBeginningAndEnd(line).IndexOf("(")).Substring(8)).ToLower
             'function hey
-            Dim getFunctionArguments = FormatConverters.ConvertToAbleToRead(FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(FormatConverters.removeSpacesAtBeginningAndEnd(line).IndexOf("(")).Substring(0, FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(FormatConverters.removeSpacesAtBeginningAndEnd(line).IndexOf("(")).Length - 1))
+            Dim getFunctionArguments = FormatConverters.ConvertToAbleToRead(FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(FormatConverters.removeSpacesAtBeginningAndEnd(line).IndexOf("(")).Substring(0, FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(FormatConverters.removeSpacesAtBeginningAndEnd(line).IndexOf("(")).Length - 1)).ToLower
+
             If Not FormatConverters.isNothingOrSpace(getFunctionName) Then
 
                 If Not Variables.ClasserExists(getFunctionName) Then
@@ -52,11 +55,22 @@
                                 Variables.CreateVariable(getArgName, "", FormatConverters.removeSpacesAtBeginningAndEnd(getFunctionName))
                             End If
                         Next
-                        listOfFunctionsNames.Items.Add(getFunctionName)
-                        listOfFunctionNamesForReturn.Items.Add(getFunctionName)
-                        listOfFunctionReturns.Items.Add("")
+                        listOfFunctionsNames.Items.Add(getFunctionName.ToLower)
+                        'listOfFunctionNamesForReturn.Items.Add(getFunctionName)
+                        listOfFunctionReturns.Items.Add("NOTHING")
                         listOfFunctionsCodes.Items.Add(codebuilt)
                         listOfFunctionsArguments.Items.Add(getFunctionArguments)
+                        lineStartForCopy.Items.Add(lineStart)
+
+                        For lineStartToLineStop2 = lineStart To lineStop - 1
+                            listOfLines.Items.Add(lineStartToLineStop2 & "-" & getFunctionName.ToLower)
+                        Next
+
+
+                        '  MsgBox("linestop function: " & lineStop)
+                        '  MsgBox("functionName: " & getFunctionName)
+                        '  MsgBox("functionCode: " & codebuilt)
+                        '  MsgBox("functionArgs: " & getFunctionArguments)
 
                         Return lineStop
                     Else

@@ -19,7 +19,7 @@
                 classers.Items.Add(SaveClasserContent & variable.ToLower & "µ")
                 classersVariablesValues.Items.Add(SaveVariablesValuesContent & "µ" & FormatConverters.getExpression(FormatConverters.ConvertToAbleToRead(FormatConverters.removeSpacesAtBeginningAndEnd(variableValue))))
             Else
-                'pup error cause a variable called 'varaible' already exists
+                'pup error cause a variable called 'variable' already exists
             End If
         Else
             'pup error cause classer doesn't exists

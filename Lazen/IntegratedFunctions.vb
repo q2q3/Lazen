@@ -32,14 +32,14 @@ Public Class IntegratedFunctions
             'informations composants/drivers
             'cryptographie
             'informations os/windows
-        ElseIf realInput.ToLower.StartsWith("String") Then
+        ElseIf realInput.ToLower.StartsWith("string") Then
             'modifier des strings
             'tolower, toupper, etc..
         ElseIf realInput.ToLower.StartsWith("network") Then
             'ping
         ElseIf realInput.ToLower.StartsWith("date") Then
             If realInput.ToLower.Substring(4).StartsWith(".") Then
-
+                'MsgBox("object: " & New DateTime(1970, 1, 1))
                 If realInput.ToLower.Substring(5).ToLower.StartsWith("timeofday") Then
                     Dim GetExpressionOfDate = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(FormatConverters.ConvertToAbleToRead(realInput.ToLower.Substring(5).Substring(9))))
                     If GetExpressionOfDate.Replace(" ", "") = "" Then
@@ -66,6 +66,9 @@ Public Class IntegratedFunctions
                 End If
             ElseIf realInput.ToLower.Substring(5).ToLower.StartsWith("dayofweek") Then
                 Dim datetime As New DateTime
+                '  ElseIf realInput.ToLower.Substring(5).ToLower.StartsWith("now") Then
+                ' MsgBox("datetime: " & Date.Now)
+                '  Return Date.Now
             End If
             'dayofweek à faire en fonction lazen
             'daysinmonth à faire en fonction lazen

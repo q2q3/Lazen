@@ -47,7 +47,7 @@
                                     Exit For
                                 End If
                             Next
-                            Return lineStop.ToString
+                            Return Long.Parse(lineStop - 1).ToString
                         End If
                     End If
                 ElseIf getCondition.Contains("//") Then
@@ -89,7 +89,7 @@
                                 Exit For
                             End If
                         Next
-                        Return lineStop.ToString
+                        Return Long.Parse(lineStop - 1).ToString
                     Else
                         'allow to execute code
                     End If
@@ -220,7 +220,7 @@
                     Exit For
                 End If
             Next
-            Return lineStop.ToString
+            Return Long.Parse(lineStop - 1).ToString
             Exit Function
         End If
         Return "abc"

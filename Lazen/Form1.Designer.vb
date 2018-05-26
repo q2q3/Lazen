@@ -37,7 +37,9 @@ Partial Class Form1
         Me.RichTextBox1.Name = "RichTextBox1"
         Me.RichTextBox1.Size = New System.Drawing.Size(818, 368)
         Me.RichTextBox1.TabIndex = 0
-        Me.RichTextBox1.Text = "if(""lazen"" != ""bad language""){" & Global.Microsoft.VisualBasic.ChrW(10) & "         print(""Welcome to Lazen !"");" & Global.Microsoft.VisualBasic.ChrW(10) & "}"
+        Me.RichTextBox1.Text = "function hey2(mamadou){" & Global.Microsoft.VisualBasic.ChrW(10) & "       return ""Sakko "", $mamadou;;hey2" & Global.Microsoft.VisualBasic.ChrW(10) & "}" & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(10) & "function hey(){" &
+    "" & Global.Microsoft.VisualBasic.ChrW(10) & "        return ""dommage pas de return ! :/"";" & Global.Microsoft.VisualBasic.ChrW(10) & "}" & Global.Microsoft.VisualBasic.ChrW(10) & "      print(&hey2(""Ali""), "" vous" &
+    " dit "", &hey());"
         '
         'Button1
         '

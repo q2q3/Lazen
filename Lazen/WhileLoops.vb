@@ -94,7 +94,7 @@
                                     Exit For
                                 End If
                             Next
-                            Return lineStop.ToString
+                            Return Long.Parse(lineStop - 1).ToString
                         End If
                     End If
                 ElseIf getCondition.Contains("//") Then
@@ -129,7 +129,7 @@
                                 Exit For
                             End If
                         Next
-                        Return lineStop.ToString
+                        Return Long.Parse(lineStop - 1).ToString
                     Else
                         While (countAmountOfTrueConditions(getCondition))
                             'MsgBox(buildCode)
@@ -190,7 +190,7 @@
                 End If
             Next
             ' MsgBox("linestop: " & lineStop.ToString)
-            Return lineStop.ToString
+            Return Long.Parse(lineStop - 1).ToString
             Exit Function
         End If
         Return "abc"

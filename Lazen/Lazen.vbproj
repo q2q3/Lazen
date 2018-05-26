@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClassersInterpreter.vb" />
+    <Compile Include="ElseConditions.vb" />
     <Compile Include="Files.vb" />
     <Compile Include="ForLoops.vb" />
     <Compile Include="Form1.vb">
@@ -84,6 +85,7 @@
     </Compile>
     <Compile Include="FormatConverters.vb" />
     <Compile Include="Functions.vb" />
+    <Compile Include="GrammaticalSimplifier.vb" />
     <Compile Include="IFconditions.vb" />
     <Compile Include="IntegratedFunctions.vb" />
     <Compile Include="Interpret.vb" />
@@ -102,6 +104,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Returns.vb" />
+    <Compile Include="RunVB.vb" />
+    <Compile Include="VariableModification.vb" />
     <Compile Include="Variables.vb" />
     <Compile Include="Voids.vb" />
     <Compile Include="WhileLoops.vb" />

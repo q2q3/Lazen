@@ -21,3 +21,14 @@ E:\Lazen\Lazen\obj\Debug\Lazen.vbprojResolveAssemblyReference.cache
 E:\Lazen\Lazen\obj\Debug\Lazen.Form1.resources
 E:\Lazen\Lazen\obj\Debug\Lazen.Resources.resources
 E:\Lazen\Lazen\obj\Debug\Lazen.vbproj.GenerateResource.Cache
+E:\fichier ali\Lazen\Lazen\bin\Debug\Lazen.exe.config
+E:\fichier ali\Lazen\Lazen\obj\Debug\Lazen.exe
+E:\fichier ali\Lazen\Lazen\obj\Debug\Lazen.xml
+E:\fichier ali\Lazen\Lazen\obj\Debug\Lazen.pdb
+E:\fichier ali\Lazen\Lazen\bin\Debug\Lazen.exe
+E:\fichier ali\Lazen\Lazen\bin\Debug\Lazen.pdb
+E:\fichier ali\Lazen\Lazen\bin\Debug\Lazen.xml
+E:\fichier ali\Lazen\Lazen\obj\Debug\Lazen.vbprojResolveAssemblyReference.cache
+E:\fichier ali\Lazen\Lazen\obj\Debug\Lazen.Form1.resources
+E:\fichier ali\Lazen\Lazen\obj\Debug\Lazen.Resources.resources
+E:\fichier ali\Lazen\Lazen\obj\Debug\Lazen.vbproj.GenerateResource.Cache
