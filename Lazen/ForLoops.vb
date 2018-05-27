@@ -10,7 +10,7 @@ Public Class ForLoops
         Return counter
     End Function
     Public Shared Sub Start(line As String, code As String, linescounter As Long)
-        If FormatConverters.removeSpacesAtBeginningAndEnd(line).ToLower.StartsWith("for") Then
+        If FormatConverters.getBeforeParenthesis(FormatConverters.removeSpacesAtBeginningAndEnd(line)).ToLower = "for" Then
             Dim GetExpressionOfFor = FormatConverters.ConvertToAbleToRead(FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(3).Substring(0, FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(3).Length - 1))
             Dim counter = 0
             Dim variableName = ""

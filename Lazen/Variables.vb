@@ -147,15 +147,19 @@
         Return False
     End Function
     Public Shared Sub start(line As String)
-        If FormatConverters.removeSpacesAtBeginningAndEnd(line).ToLower.StartsWith("define") Then
-            Dim lineSubstring = FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(6)
-            Dim classer = FormatConverters.ConvertToAbleToRead(lineSubstring.Split(" ")(0)).ToLower
+        If FormatConverters.getBeforeParenthesis(FormatConverters.removeSpacesAtBeginningAndEnd(line)).ToLower = "define" Then
+            Dim lineSubstring As String = FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(6)
+            Dim classer As String = FormatConverters.ConvertToAbleToRead(lineSubstring.Split(" ")(0)).ToLower
             If Variables.ClasserExists(classer.ToLower) Then
-                Dim varName = FormatConverters.getExpression(line.Split(" ")(1)).ToLower
+                Dim varName As String = FormatConverters.getExpression(line.Split(" ")(1)).ToLower
 
+                If VariableExists(varName, classer) Then
+                    'pup error cause variable varName;;classer already exists
+                    Exit Sub
+                End If
 
                 If line.Contains("=") Then
-                    Dim varValue = FormatConverters.getExpression(FormatConverters.ConvertToAbleToRead(FormatConverters.removeSpacesAtBeginningAndEnd(line.Split("=")(1))))
+                    Dim varValue As String = FormatConverters.getExpression(FormatConverters.ConvertToAbleToRead(FormatConverters.removeSpacesAtBeginningAndEnd(line.Split("=")(1))))
 
                     Variables.CreateVariable(varName, varValue, classer)
 

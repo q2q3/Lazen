@@ -32,7 +32,7 @@
         Return composeCode
     End Function
     Public Shared Function Start(line As String, linescounter As Long, code As String)
-        If FormatConverters.removeSpacesAtBeginningAndEnd(line).ToLower.StartsWith("while") Then
+        If FormatConverters.getBeforeParenthesis(FormatConverters.removeSpacesAtBeginningAndEnd(line)).ToLower = "while" Then
             'while(&Math.Get(1 + 1) = 2){
             '     Print("1 + 1 = 2");
             '}

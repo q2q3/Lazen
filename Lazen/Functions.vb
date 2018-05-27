@@ -7,7 +7,7 @@
     Public Shared listOfLines As New ListBox
     Public Shared lineStartForCopy As New ListBox
     Public Shared Function start(line As String, linescounter As Long, code As String)
-        If FormatConverters.removeSpacesAtBeginningAndEnd(line).ToLower.StartsWith("function") Then
+        If FormatConverters.removeSpacesAtBeginningAndEnd(line).ToLower.StartsWith("function ") Then
             Dim getFunctionName = FormatConverters.removeSpacesAtBeginningAndEnd(FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(0, FormatConverters.removeSpacesAtBeginningAndEnd(line).IndexOf("(")).Substring(8)).ToLower
             'function hey
             Dim getFunctionArguments = FormatConverters.ConvertToAbleToRead(FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(FormatConverters.removeSpacesAtBeginningAndEnd(line).IndexOf("(")).Substring(0, FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(FormatConverters.removeSpacesAtBeginningAndEnd(line).IndexOf("(")).Length - 1)).ToLower

@@ -1,32 +1,16 @@
 ﻿Public Class VariableModification
-    Public Shared Sub start(line, linescounter)
-        If line.ToLower.Contains("(") AndAlso line.ToLower.Contains(")") AndAlso line.ToLower.Contains(":=") Then
-            Dim varname = ""
-            Dim varclasser = ""
-            Dim varnewvalue = ""
-            Dim splitDelimiterFirst = FormatConverters.removeSpacesAtBeginningAndEnd(FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(0, FormatConverters.removeSpacesAtBeginningAndEnd(line).IndexOf(":=")))
-            Dim splitDelimiterSecond = FormatConverters.removeSpacesAtBeginningAndEnd(FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(FormatConverters.removeSpacesAtBeginningAndEnd(line).ToLower.IndexOf(":=") + 2))
-            Try
-                varname = splitDelimiterFirst.Substring(0, splitDelimiterFirst.IndexOf("(")).ToLower
-                varclasser = FormatConverters.removeSpacesAtBeginningAndEnd(FormatConverters.ConvertToAbleToRead(splitDelimiterFirst.Substring(splitDelimiterFirst.IndexOf("(") + 1))).ToLower
-                If Variables.ClasserExists(varclasser.ToLower) Then
+    Public Shared Sub start(line As String, linescounter As Long)
+        If FormatConverters.getBeforeParenthesis(FormatConverters.removeSpacesAtBeginningAndEnd(line)).ToLower = "edit" Then
 
-                    varnewvalue = FormatConverters.getExpression(splitDelimiterSecond)
+            Dim splitUntilParenthesis As String = FormatConverters.ConvertToAbleToRead(FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(4))
+            Dim getVariableAndClasserToEdit As String = FormatConverters.removeSpacesAtBeginningAndEnd(splitUntilParenthesis.Substring(0, splitUntilParenthesis.IndexOf(":")))
+            Dim getNewValue As String = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(splitUntilParenthesis.Substring(splitUntilParenthesis.IndexOf(":") + 2)))
 
-                    If Variables.VariableExists(varname, varclasser) Then
-                        Variables.EditVariable(varname, varnewvalue, varclasser)
-                    Else
-                        'pup error cause variable doesn't exists
-                    End If
+            Dim getVariableName As String = FormatConverters.getClasserAndVariableDelimited(getVariableAndClasserToEdit, "variable").ToLower
+            Dim getClasser As String = FormatConverters.getClasserAndVariableDelimited(getVariableAndClasserToEdit, "classer").ToLower
 
-                    '    MsgBox("varnewvalue: " & varnewvalue)
-                Else
-                    'pup error cause classer doesn't exists
-                End If
-            Catch ex As Exception
+            Variables.EditVariable(getVariableName, getNewValue, getClasser)
 
-            End Try
-            'editvariable(varaiblename;;classer :: newvalue);
         End If
     End Sub
 End Class

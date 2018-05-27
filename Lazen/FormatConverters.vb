@@ -33,6 +33,15 @@ Public Class FormatConverters
         Next
         Return removespacesAtTheEnd(input.Substring(counter))
     End Function
+    Public Shared Function getBeforeParenthesis(input As String) As String
+        Dim result As String = input
+
+        If input.ToLower.Contains("(") Then
+            result = result.Substring(0, result.IndexOf("("))
+        End If
+
+        Return result
+    End Function
     Public Shared Function ConvertToAbleToRead(input As String) As String
         Dim realInput = input
         Try
@@ -69,7 +78,7 @@ Public Class FormatConverters
         Next
         Return True
     End Function
-    Public Shared Function getClasserAndVariableDelimited(input As String, classerOrVariable As String)
+    Public Shared Function getClasserAndVariableDelimited(input As String, classerOrVariable As String) As String
         If input.Contains(";;") Then
 
             Dim counter = 0
@@ -163,16 +172,24 @@ Public Class FormatConverters
             Return inputs.ToString
         End If
     End Function
-    Public Shared Function getExpression(input As String) As String
-        Dim realInput = ConvertToAbleToRead(removeSpacesAtBeginningAndEnd(input))
-        Dim finalOutput = ""
-        Dim BigFinalOutput = ""
-        Dim listOfStringForMyFunction = splitObjectsCorrectlyInALine(input)
+    Public Shared Function getExpression(inputRaw As String) As String
+
+        Dim input As String = inputRaw
+
+        If input.EndsWith(";") Then 'check if input ends with a semicolon
+            input = input.Substring(0, input.Length - 1) 'remove the semicolon
+        End If
+
+
+        Dim realInput As String = ConvertToAbleToRead(removeSpacesAtBeginningAndEnd(input))
+        Dim finalOutput As String = ""
+        Dim BigFinalOutput As String = ""
+        Dim listOfStringForMyFunction As List(Of String) = splitObjectsCorrectlyInALine(input)
         Try
             For Each i As String In listOfStringForMyFunction
-                Dim realI = ConvertToAbleToRead(removeSpacesAtBeginningAndEnd(i))
+                Dim realI As String = ConvertToAbleToRead(removeSpacesAtBeginningAndEnd(i))
                 If realI.StartsWith("""") Then
-                    Dim realIConvert = RemoveQuotes(realI)
+                    Dim realIConvert As String = RemoveQuotes(realI)
                     finalOutput += realIConvert
                 ElseIf realI.StartsWith("&") Then
                     Dim getFunctionCallName As String = FormatConverters.removeSpacesAtBeginningAndEnd(realI.Substring(1).Substring(0, realI.IndexOf("(") - 1)).ToLower
@@ -242,16 +259,15 @@ Public Class FormatConverters
                     'define(vc) b = "hello";
                     'print($salut;;dc)
                     'print($salutations;;dc, "Est le spécimen de ", ##&Math.ComputeExpression("5 + ", "5 + ", "8"))
-                    Dim variableName = getClasserAndVariableDelimited(realI.Substring(1), "variable")
-                    Dim classer = getClasserAndVariableDelimited(realI.Substring(1), "classer").ToString.ToLower
+                    Dim variableName As String = getClasserAndVariableDelimited(realI.Substring(1), "variable")
+                    Dim classer As String = getClasserAndVariableDelimited(realI.Substring(1), "classer").ToString.ToLower
                     finalOutput += Variables.GetVariable(variableName, classer)
                 Else
                     finalOutput += realI
                 End If
             Next
         Catch ex As Exception
-            MsgBox(ex.StackTrace)
-            MsgBox(ex.Message)
+            Return "ERROR-IN-GETEXPRESSION"
         End Try
 
         Return finalOutput

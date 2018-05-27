@@ -4,7 +4,7 @@ Public Class Voids
     Public Shared ListOfCodeOfVoids As New ListBox
     Public Shared ListOfVoidVariables As New ListBox
     Public Shared Function start(line As String, linescounter As Long, code As String)
-        If FormatConverters.removeSpacesAtBeginningAndEnd(line).ToLower.StartsWith("void") Then
+        If FormatConverters.removeSpacesAtBeginningAndEnd(line).ToLower.StartsWith("void ") Then
             'void voidname(argument1 :: argument2){
             Dim voidname = FormatConverters.removeSpacesAtBeginningAndEnd(line.Substring(line.ToLower.IndexOf("void") + 4)).Split("(")(0).ToLower
             Dim voidarguments = FormatConverters.ConvertToAbleToRead(FormatConverters.removeSpacesAtBeginningAndEnd(line.Substring(line.IndexOf("(")).Substring(0, line.Substring(line.IndexOf("(")).LastIndexOf("{"))))

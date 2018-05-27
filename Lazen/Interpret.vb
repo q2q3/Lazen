@@ -27,35 +27,18 @@
         Next
         Return found
     End Function
-    Shared lineBoostCopy As Long = 0
+    Public Shared lineBoostCopy As Long = 0
     Public Shared Function interpretLine(line As String, code As String, linescounter As Long, lineAccessible As TextBox) As String
         'MsgBox("line: " & line)
         Voids.startVoid(line, linescounter)
         ForLoops.Start(line, code, linescounter)
         ClassersInterpreter.start(line)
         Variables.start(line)
+        VariableModification.start(line, linescounter)
 
-        If FormatConverters.removeSpacesAtBeginningAndEnd(line).ToLower.StartsWith("return ") Then
-
-            For Each i As String In Functions.listOfLines.Items
-                '  MsgBox(i.Split("-")(0) & "/" & lineBoostCopy & "/" & line)
-                If i.Split("-")(0) = lineBoostCopy Then
-
-                    Dim nomDeLaFonction As String = i.Split("-")(1).ToLower
-                    '  MsgBox("stringToGetExpressionFrom: " & FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(7))
-                    Dim getReturn As String = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(7))
-
-                    lineBoostCopy = 0
-                    '  MsgBox("getreturn: " & getReturn)
-
-                    Functions.listOfFunctionReturns.Items(Functions.listOfFunctionsNames.Items.IndexOf(nomDeLaFonction)) = getReturn
-
-                    Return "exit"
-
-                End If
-
-            Next
-
+        Dim returnStart = Returns.start(line)
+        If returnStart = "exit" Then
+            Return "exit"
         End If
 
         Dim resultIfCondition = IFconditions.start(line, code, linescounter)
@@ -85,47 +68,51 @@
             lineAccessible.Text = resultElseConditions.ToString
         Else
         End If
-        VariableModification.start(line, linescounter)
         'MsgBox("continue: " & line)
-        If FormatConverters.removeSpacesAtBeginningAndEnd(line).ToLower.StartsWith("print") Then
-            Dim splitFormatConverters = FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(5)
-            Dim AbleToReadConverter = FormatConverters.getExpression(FormatConverters.ConvertToAbleToRead(splitFormatConverters))
+        If FormatConverters.getBeforeParenthesis(FormatConverters.removeSpacesAtBeginningAndEnd(line)).ToLower = "print" Then
+            Dim splitFormatConverters As String = FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(5)
+            Dim AbleToReadConverter As String = FormatConverters.getExpression(FormatConverters.ConvertToAbleToRead(splitFormatConverters))
             MsgBox(AbleToReadConverter, , "")
         End If
+
+        Return ""
     End Function
     Shared linenumber = 0
     Public Shared Sub Start(code As String, Optional activated As Boolean = False, Optional lineBoost As Long = 0)
-
-        Dim lineAccessible As New TextBox
-        lineAccessible.Text = "0"
-        Dim splitCode = code.Replace(vbTab, "").Split(codeLinesDelimiter)
-        Dim linesCounter As Long = 0
-        If activated Then
-            lineBoostCopy = lineBoost
-        End If
-        For linenumbers = 0 To splitCode.Count - 1
-            ' If Not Long.Parse(lineAccessible.Text) > splitCode.Count - 1 Then
-            If Not Long.Parse(lineAccessible.Text) > splitCode.Count - 1 Then
-                ' MsgBox("code: " & code)
-                Dim line = splitCode(Long.Parse(lineAccessible.Text))
-                ' MsgBox("code : " & code & " / " & linesCounter.ToString)
-                Dim interpretAndGetResult As String = interpretLine(line, code, linesCounter, lineAccessible)
-
-                If interpretAndGetResult = "exit" Then
-                    Exit Sub
-                End If
-                '     End If
-                '  End If
-                'define(dc) lol; 
-                'define(dc) lol = "Salut";
-                lineAccessible.Text = Long.Parse(lineAccessible.Text + 1).ToString
-                linesCounter = Long.Parse(lineAccessible.Text)
-                ' linenumber += Long.Parse(lineAccessible.Text + 1)
-
-                lineBoostCopy += 1
+        Try
+            Dim lineAccessible As New TextBox
+            lineAccessible.Text = "0"
+            Dim splitCode = code.Replace(vbTab, "").Split(codeLinesDelimiter)
+            Dim linesCounter As Long = 0
+            If activated Then
+                lineBoostCopy = lineBoost
             End If
-            '   End If
-        Next
+            For linenumbers = 0 To splitCode.Count - 1
+                ' If Not Long.Parse(lineAccessible.Text) > splitCode.Count - 1 Then
+                If Not Long.Parse(lineAccessible.Text) > splitCode.Count - 1 Then
+                    ' MsgBox("code: " & code)
+                    Dim line = splitCode(Long.Parse(lineAccessible.Text))
+                    ' MsgBox("code : " & code & " / " & linesCounter.ToString)
+                    Dim interpretAndGetResult As String = interpretLine(line, code, linesCounter, lineAccessible)
+
+                    If interpretAndGetResult = "exit" Then
+                        Exit Sub
+                    End If
+                    '     End If
+                    '  End If
+                    'define(dc) lol; 
+                    'define(dc) lol = "Salut";
+                    lineAccessible.Text = Long.Parse(lineAccessible.Text + 1).ToString
+                    linesCounter = Long.Parse(lineAccessible.Text)
+                    ' linenumber += Long.Parse(lineAccessible.Text + 1)
+
+                    lineBoostCopy += 1
+                End If
+                '   End If
+            Next
+        Catch ex As StackOverflowException
+            'pup error cause an infinite loop occured
+        End Try
     End Sub
 
 End Class

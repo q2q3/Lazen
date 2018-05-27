@@ -1,6 +1,6 @@
 ﻿Public Class ClassersInterpreter
     Public Shared Sub start(line As String)
-        If FormatConverters.removeSpacesAtBeginningAndEnd(line).ToLower.StartsWith("classer") Then
+        If FormatConverters.removeSpacesAtBeginningAndEnd(line).ToLower.StartsWith("classer ") Then
             Dim classerName = FormatConverters.ConvertToAbleToRead(FormatConverters.removeSpacesAtBeginningAndEnd(FormatConverters.removeSpacesAtBeginningAndEnd(line).ToLower.Substring(7)))
             If Not Variables.ClasserExists(classerName.ToLower) Then
 
