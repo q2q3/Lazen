@@ -1,6 +1,4 @@
-<h1>A fully home-made programming language.</h1>
-<h1>Simple to use, coherent, flexible and a beautiful syntax !</h1>
-<h2>I'm very active on developping Lazen !</h2>
+<h1>The Lazen Programming Language</h1>
 <br>
 
 <h1>Functionnalities</h1>
