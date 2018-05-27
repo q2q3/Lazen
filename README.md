@@ -1,6 +1,5 @@
 <h1>The Lazen Programming Language</h1>
 <br>
-
 <h1>Functionnalities</h1>
 
 ♦ If Conditions<br>
@@ -26,3 +25,4 @@
 ♦ 03/07/2018 | Variable Modification Added<br>
 ♦ 03/07/2018 | Functions With Arguments Added<br>
 ♦ 05/26/2018 | Functions Fixed Completly<br>
+♦ 05/26/2018 | Variable Modification Re-Wrote<br>
