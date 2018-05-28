@@ -2,17 +2,17 @@
 <br>
 <h1>Functionnalities</h1>
 
-♦ If Conditions<br>
-♦ And/Or Operators on Conditions<br>
-♦ While Conditions<br>
-♦ Variables<br>
-♦ Variable Modification<br>
-♦ Classers to sort your variables correctly<br>
-♦ For Loops<br>
-♦ Voids With Arguments<br>
-♦ Functions With Arguments<br>
-♦ Maths Class Integrated<br>
-♦ Date-Time Class Integrated<br>
+• If Conditions<br>
+• And/Or Operators on Conditions<br>
+• While Conditions<br>
+• Variables<br>
+• Variable Modification<br>
+• Classers to sort your variables correctly<br>
+• For Loops<br>
+• Voids With Arguments<br>
+• Functions With Arguments<br>
+• Maths Class Integrated<br>
+• Date-Time Class Integrated<br>
 
 
 
@@ -26,3 +26,7 @@
 ♦ 03/07/2018 | Functions With Arguments Added<br>
 ♦ 05/26/2018 | Functions Fixed Completly<br>
 ♦ 05/27/2018 | Variable Modification Re-Wrote, optimizations on the Syntax (especially on the object identification)<br>
+
+
+<h1>Current Issues</h1>
+• 05/28/2018 | Compatibility Problem with Functions and Loops (While & For)<br>
