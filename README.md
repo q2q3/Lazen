@@ -25,4 +25,4 @@
 ♦ 03/07/2018 | Variable Modification Added<br>
 ♦ 03/07/2018 | Functions With Arguments Added<br>
 ♦ 05/26/2018 | Functions Fixed Completly<br>
-♦ 05/27/2018 | Variable Modification Re-Wrote, optimizations on the Syntax (especially the object identification)<br>
+♦ 05/27/2018 | Variable Modification Re-Wrote, optimizations on the Syntax (especially on the object identification)<br>
