@@ -26,7 +26,8 @@
 ♦ 03/07/2018 | Functions With Arguments Added<br>
 ♦ 05/26/2018 | Functions Fixed Completly<br>
 ♦ 05/27/2018 | Variable Modification Re-Wrote, optimizations on the Syntax (especially on the object identification)<br>
-
+♦ 05/02/2018 | Functions & Loops Incompatibility Fixed Completly<br>
+♦ 06/02/2018 | Source-Code Re-Arranged, the Source-Code is now beautiful & easy to read<br>
 
 <h1>Current Issues</h1>
-• 05/28/2018 | Compatibility Problem with Functions and Loops (While & For)<br>
+
