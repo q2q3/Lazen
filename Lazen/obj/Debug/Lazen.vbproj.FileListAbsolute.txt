@@ -32,3 +32,14 @@ E:\fichier ali\Lazen\Lazen\obj\Debug\Lazen.vbprojResolveAssemblyReference.cache
 E:\fichier ali\Lazen\Lazen\obj\Debug\Lazen.Form1.resources
 E:\fichier ali\Lazen\Lazen\obj\Debug\Lazen.Resources.resources
 E:\fichier ali\Lazen\Lazen\obj\Debug\Lazen.vbproj.GenerateResource.Cache
+C:\Users\jomtek360\Desktop\Lazen\Lazen\bin\Debug\Lazen.exe.config
+C:\Users\jomtek360\Desktop\Lazen\Lazen\obj\Debug\Lazen.exe
+C:\Users\jomtek360\Desktop\Lazen\Lazen\obj\Debug\Lazen.xml
+C:\Users\jomtek360\Desktop\Lazen\Lazen\obj\Debug\Lazen.pdb
+C:\Users\jomtek360\Desktop\Lazen\Lazen\bin\Debug\Lazen.exe
+C:\Users\jomtek360\Desktop\Lazen\Lazen\bin\Debug\Lazen.pdb
+C:\Users\jomtek360\Desktop\Lazen\Lazen\bin\Debug\Lazen.xml
+C:\Users\jomtek360\Desktop\Lazen\Lazen\obj\Debug\Lazen.vbprojResolveAssemblyReference.cache
+C:\Users\jomtek360\Desktop\Lazen\Lazen\obj\Debug\Lazen.Form1.resources
+C:\Users\jomtek360\Desktop\Lazen\Lazen\obj\Debug\Lazen.Resources.resources
+C:\Users\jomtek360\Desktop\Lazen\Lazen\obj\Debug\Lazen.vbproj.GenerateResource.Cache

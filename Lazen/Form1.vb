@@ -19,6 +19,10 @@
         Functions.listOfFunctionsNames.Items.Clear()
         Functions.listOfLines.Items.Clear()
         Functions.lineStartForCopy.Items.Clear()
+        ForLoops.listOfForLoopsLines.Items.Clear()
+        ForLoops.listOfForLoopsVariables.Items.Clear()
+
+        WhileLoops.ListOfWhileLoopsLines.Items.Clear()
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load

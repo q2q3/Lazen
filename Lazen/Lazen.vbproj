@@ -85,7 +85,6 @@
     </Compile>
     <Compile Include="FormatConverters.vb" />
     <Compile Include="Functions.vb" />
-    <Compile Include="GrammaticalSimplifier.vb" />
     <Compile Include="IFconditions.vb" />
     <Compile Include="IntegratedFunctions.vb" />
     <Compile Include="Interpret.vb" />
@@ -105,7 +104,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Returns.vb" />
-    <Compile Include="RunVB.vb" />
     <Compile Include="VariableModification.vb" />
     <Compile Include="Variables.vb" />
     <Compile Include="Voids.vb" />

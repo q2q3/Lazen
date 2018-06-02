@@ -1,25 +1,22 @@
 ﻿Public Class Returns
-    Public Shared Function start(line As String)
+    Public Shared Function start(line As String, isFunction As Boolean, functionName As String)
         If FormatConverters.removeSpacesAtBeginningAndEnd(line).ToLower.StartsWith("return ") Then
 
-            For Each i As String In Functions.listOfLines.Items
-                If i.Split("-")(0) = Interpret.lineBoostCopy Then
+            If isFunction Then
+                Dim nomDeLaFonction As String = functionName.ToLower
+                Dim getReturn As String = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(7))
 
-                    Dim nomDeLaFonction As String = i.Split("-")(1).ToLower
-                    Dim getReturn As String = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(7))
 
-                    Interpret.lineBoostCopy = 0
+                Functions.listOfFunctionReturns.Items(Functions.listOfFunctionsNames.Items.IndexOf(nomDeLaFonction)) = getReturn
 
-                    Functions.listOfFunctionReturns.Items(Functions.listOfFunctionsNames.Items.IndexOf(nomDeLaFonction)) = getReturn
+                Return "exit"
+            Else
 
-                    Return "exit"
+                'pup error cause a return should be on a function
 
-                End If
-
-            Next
-
+            End If
         End If
 
-        Return ""
+            Return ""
     End Function
 End Class

@@ -37,9 +37,8 @@ Partial Class Form1
         Me.RichTextBox1.Name = "RichTextBox1"
         Me.RichTextBox1.Size = New System.Drawing.Size(818, 368)
         Me.RichTextBox1.TabIndex = 0
-        Me.RichTextBox1.Text = "function hey2(mamadou){" & Global.Microsoft.VisualBasic.ChrW(10) & "       return ""Sakko "", $mamadou;;hey2" & Global.Microsoft.VisualBasic.ChrW(10) & "}" & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(10) & "function hey(){" &
-    "" & Global.Microsoft.VisualBasic.ChrW(10) & "        return ""dommage pas de return ! :/"";" & Global.Microsoft.VisualBasic.ChrW(10) & "}" & Global.Microsoft.VisualBasic.ChrW(10) & "      print(&hey2(""Ali""), "" vous" &
-    " dit "", &hey());"
+        Me.RichTextBox1.Text = "function hey(word :: times){" & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "define(hey) result = """";" & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "while(0){" & Global.Microsoft.VisualBasic.ChrW(10) & "               " &
+    " }" & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & "return ""batar""" & Global.Microsoft.VisualBasic.ChrW(10) & "}" & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "print(&hey(""a"" :: ""10""));"
         '
         'Button1
         '

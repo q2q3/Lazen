@@ -28,15 +28,15 @@
         Return found
     End Function
     Public Shared lineBoostCopy As Long = 0
-    Public Shared Function interpretLine(line As String, code As String, linescounter As Long, lineAccessible As TextBox) As String
-        'MsgBox("line: " & line)
+    Public Shared Function interpretLine(line As String, code As String, linescounter As Long, lineAccessible As TextBox, Optional isFunction As Boolean = False, Optional functionName As String = "") As String
+
         Voids.startVoid(line, linescounter)
-        ForLoops.Start(line, code, linescounter)
+        ForLoops.Start(line, code, linescounter, isFunction, functionName)
         ClassersInterpreter.start(line)
         Variables.start(line)
         VariableModification.start(line, linescounter)
 
-        Dim returnStart = Returns.start(line)
+        Dim returnStart = Returns.start(line, isFunction, functionName)
         If returnStart = "exit" Then
             Return "exit"
         End If
@@ -46,29 +46,37 @@
             lineAccessible.Text = resultIfCondition.ToString
         Else
         End If
-        Dim resultVoidStart = Voids.start(line, linescounter, code)
-        If IsNumeric(resultVoidStart) Then
-            lineAccessible.Text = resultVoidStart.ToString
-        Else
-        End If
 
-        Dim resultFunctionsStart = Functions.start(line, linescounter, code)
-        If IsNumeric(resultFunctionsStart) Then
-            lineAccessible.Text = resultFunctionsStart.ToString
-        Else
-        End If
+        If Not isFunction Then ''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-        Dim resultWhileStart = WhileLoops.Start(line, linescounter, code)
+            Dim resultVoidStart = Voids.start(line, linescounter, code)
+            If IsNumeric(resultVoidStart) Then
+                lineAccessible.Text = resultVoidStart.ToString
+            Else
+            End If
+
+            Dim resultFunctionsStart = Functions.start(line, linescounter, code)
+            If IsNumeric(resultFunctionsStart) Then
+                lineAccessible.Text = resultFunctionsStart.ToString
+            Else
+            End If
+
+        End If ''''''''''''''''''''''''''''''''''''''''
+
+
+        Dim resultWhileStart = WhileLoops.Start(line, linescounter, code, isFunction, functionName)
         If IsNumeric(resultWhileStart) Then
             lineAccessible.Text = resultWhileStart.ToString
         Else
         End If
+
+
         Dim resultElseConditions = ElseConditions.start(line, linescounter, code)
         If IsNumeric(resultElseConditions) Then
             lineAccessible.Text = resultElseConditions.ToString
         Else
         End If
-        'MsgBox("continue: " & line)
+
         If FormatConverters.getBeforeParenthesis(FormatConverters.removeSpacesAtBeginningAndEnd(line)).ToLower = "print" Then
             Dim splitFormatConverters As String = FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(5)
             Dim AbleToReadConverter As String = FormatConverters.getExpression(FormatConverters.ConvertToAbleToRead(splitFormatConverters))
@@ -77,38 +85,28 @@
 
         Return ""
     End Function
-    Shared linenumber = 0
-    Public Shared Sub Start(code As String, Optional activated As Boolean = False, Optional lineBoost As Long = 0)
+    Public Shared Sub Start(code As String, Optional isFunction As Boolean = False, Optional functionName As String = "")
         Try
             Dim lineAccessible As New TextBox
             lineAccessible.Text = "0"
-            Dim splitCode = code.Replace(vbTab, "").Split(codeLinesDelimiter)
+            Dim splitCode As String() = code.Replace(vbTab, "").Split(codeLinesDelimiter)
             Dim linesCounter As Long = 0
-            If activated Then
-                lineBoostCopy = lineBoost
-            End If
-            For linenumbers = 0 To splitCode.Count - 1
-                ' If Not Long.Parse(lineAccessible.Text) > splitCode.Count - 1 Then
+
+            For linenumbers As Long = 0 To splitCode.Count - 1
+
                 If Not Long.Parse(lineAccessible.Text) > splitCode.Count - 1 Then
-                    ' MsgBox("code: " & code)
-                    Dim line = splitCode(Long.Parse(lineAccessible.Text))
-                    ' MsgBox("code : " & code & " / " & linesCounter.ToString)
-                    Dim interpretAndGetResult As String = interpretLine(line, code, linesCounter, lineAccessible)
+
+                    Dim line As String = splitCode(Long.Parse(lineAccessible.Text))
+                    Dim interpretAndGetResult As String = interpretLine(line, code, linesCounter, lineAccessible, isFunction, functionName)
 
                     If interpretAndGetResult = "exit" Then
                         Exit Sub
                     End If
-                    '     End If
-                    '  End If
-                    'define(dc) lol; 
-                    'define(dc) lol = "Salut";
+
                     lineAccessible.Text = Long.Parse(lineAccessible.Text + 1).ToString
                     linesCounter = Long.Parse(lineAccessible.Text)
-                    ' linenumber += Long.Parse(lineAccessible.Text + 1)
 
-                    lineBoostCopy += 1
                 End If
-                '   End If
             Next
         Catch ex As StackOverflowException
             'pup error cause an infinite loop occured

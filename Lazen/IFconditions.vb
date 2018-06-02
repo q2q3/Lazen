@@ -1,11 +1,17 @@
 ﻿Public Class IFconditions
     Public Shared Function start(line As String, code As String, linescounter As Long)
         If FormatConverters.removeSpacesAtBeginningAndEnd(line).ToLower.StartsWith("if") Then
-            Dim getCondition = FormatConverters.ConvertToAbleToRead(FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(2)).Substring(0, FormatConverters.ConvertToAbleToRead(FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(2)).LastIndexOf("{"))
+            Dim getCondition As String = FormatConverters.ConvertToAbleToRead(FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(2)).Substring(0, FormatConverters.ConvertToAbleToRead(FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(2)).LastIndexOf("{"))
 
             If getCondition.Contains("//") Or getCondition.Contains("><") Then
+
+                '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+                'examples
+
                 '// = or
                 '>< = and
+
                 'if("5" + "5" = "10" >< "8" + "8" = "16"){
                 '
                 '}
@@ -18,19 +24,28 @@
                 '
                 '}
 
+                ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
                 If Not getCondition.Contains("//") Then
                     If getCondition.Contains("><") Then
 
                         If verifyandofcondition(getCondition) Then
+
                             'allow to execute code
+
                         Else
-                            Dim lineStart = linescounter
-                            Dim lineStop = 0
-                            Dim ouvrantes = 0
-                            Dim exitforsecond = False
-                            For countLines = lineStart + 1 To code.Split(ControlChars.Lf).Count - 1
-                                Dim i = code.Split(ControlChars.Lf)(countLines)
+
+                            Dim lineStart As Long = linescounter
+                            Dim lineStop As Long = 0
+                            Dim ouvrantes As Long = 0
+                            Dim exitforsecond As Boolean = False
+
+                            For countLines As Long = lineStart + 1 To code.Split(ControlChars.Lf).Count - 1
+
+                                Dim i As String = code.Split(ControlChars.Lf)(countLines)
+
                                 For Each countchar As String In i
+
                                     If countchar = "{" Then
                                         ouvrantes += 1
                                     ElseIf countchar = "}" Then
@@ -42,40 +57,59 @@
                                             Exit For
                                         End If
                                     End If
+
                                 Next
+
                                 If exitforsecond = True Then
                                     Exit For
                                 End If
+
                             Next
+
                             Return Long.Parse(lineStop - 1).ToString
                         End If
                     End If
+
                 ElseIf getCondition.Contains("//") Then
-                    Dim amountofor = 0
+
+                    Dim amountofor As Long = 0
+                    Dim amountOfTrueConditions As Long = 0
+
                     For Each countAmountOfOr As String In getCondition.Split("//")
+
                         If Not countAmountOfOr = "" Then
                             amountofor += 1
                         End If
+
                     Next
-                    Dim amountOfTrueConditions = 0
+
                     For Each i As String In getCondition.Split("//")
+
                         If Not i = "" Then
                             If verifyandofcondition(i) Then
                                 amountOfTrueConditions += 1
                             End If
                         End If
+
                     Next
+
                     If Not amountOfTrueConditions > 0 Then
-                        Dim lineStart = linescounter
-                        Dim lineStop = 0
-                        Dim ouvrantes = 0
-                        Dim exitforsecond = False
-                        For countLines = lineStart + 1 To code.Split(ControlChars.Lf).Count - 1
-                            Dim i = code.Split(ControlChars.Lf)(countLines)
+
+                        Dim lineStart As Long = linescounter
+                        Dim lineStop As Long = 0
+                        Dim ouvrantes As Long = 0
+                        Dim exitforsecond As Boolean = False
+
+                        For countLines As Long = lineStart + 1 To code.Split(ControlChars.Lf).Count - 1
+
+                            Dim i As String = code.Split(ControlChars.Lf)(countLines)
+
                             For Each countchar As String In i
+
                                 If countchar = "{" Then
                                     ouvrantes += 1
                                 ElseIf countchar = "}" Then
+
                                     If ouvrantes > 0 Then
                                         ouvrantes -= 1
                                     Else
@@ -83,12 +117,17 @@
                                         exitforsecond = True
                                         Exit For
                                     End If
+
                                 End If
+
                             Next
+
                             If exitforsecond = True Then
                                 Exit For
                             End If
+
                         Next
+
                         Return Long.Parse(lineStop - 1).ToString
                     Else
                         'allow to execute code
@@ -98,37 +137,45 @@
                 Return startcondition(getCondition, code, line, linescounter)
             End If
         End If
-
-
     End Function
-    Public Shared Function verifyandofcondition(getcondition As String)
+    Public Shared Function verifyandofcondition(getcondition As String) As Boolean
         Dim listOfVerifyConditions As New ListBox
-        Dim counterOfCondition = 0
+        Dim counterOfCondition As Long = 0
+
         For Each i As String In getcondition.Split("><")
+
             If Not i = "" Then
+
                 Dim conditionPartOriginal = i
+
                 If counterOfCondition = getcondition.Split("><").Count - 1 Then
                     conditionPartOriginal = conditionPartOriginal
                 End If
+
                 If conditionPartOriginal.StartsWith("<") Then
                     conditionPartOriginal = conditionPartOriginal.Substring(1)
                 End If
+
                 conditionPartOriginal = FormatConverters.removeSpacesAtBeginningAndEnd(FormatConverters.ConvertToAbleToRead(conditionPartOriginal))
                 listOfVerifyConditions.Items.Add(verifycondition(conditionPartOriginal))
+
             End If
+
             counterOfCondition += 1
         Next
 
         For Each i2 As String In listOfVerifyConditions.Items
+
             If i2 = "0" Then
                 Return False
                 Exit Function
             End If
+
         Next
+
         Return True
     End Function
     Public Shared Function verifycondition(getconditions As String)
-
         If FormatConverters.getExpression(FormatConverters.ConvertToAbleToRead(getconditions)) = "1" Then
             Return "1"
             Exit Function
@@ -136,10 +183,14 @@
             Return "0"
             Exit Function
         End If
-        Dim getcondition = getconditions
-        Dim getfirstobject
-        Dim getsecondobject
+
+        Dim getcondition As String = getconditions
+        Dim getfirstobject As String = ""
+        Dim getsecondobject As String = ""
+
+
         If getcondition.Contains("!=") Then
+
             getfirstobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split("!=")(0)))
             getsecondobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split("!=")(1).Substring(1).Substring(0, getcondition.Split("!=")(1).Substring(1).Length)))
 
@@ -148,65 +199,86 @@
             Else
                 Return "0"
             End If
+
         ElseIf getcondition.Contains("<=") Then
+
             getfirstobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split("<=")(0)))
             getsecondobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split("<=")(1).Substring(1).Substring(0, getcondition.Split("<=")(1).Substring(1).Length)))
+
             If Long.Parse(getfirstobject) <= Long.Parse(getsecondobject) Then
                 Return "1"
             Else
                 Return "0"
             End If
+
         ElseIf getcondition.Contains(">=") Then
+
             getfirstobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split(">=")(0)))
             getsecondobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split(">=")(1).Substring(1).Substring(0, getcondition.Split(">=")(1).Substring(1).Length)))
+
             If Long.Parse(getfirstobject) >= Long.Parse(getsecondobject) Then
                 Return "1"
             Else
                 Return "0"
             End If
+
         ElseIf getcondition.Contains("=") Then
+
             getfirstobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split("=")(0)))
             getsecondobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split("=")(1).Substring(1).Substring(0, getcondition.Split("=")(1).Substring(1).Length)))
+
             If getfirstobject = getsecondobject Then
                 Return "1"
             Else
                 Return "0"
             End If
+
         ElseIf getcondition.Contains("<") Then
+
             getfirstobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split("<")(0)))
             getsecondobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split("<")(1).Substring(1).Substring(0, getcondition.Split("<")(1).Substring(1).Length)))
+
             If Long.Parse(getfirstobject) < Long.Parse(getsecondobject) Then
                 Return "1"
             Else
                 Return "0"
             End If
+
             Return ""
+
         ElseIf getcondition.Contains(">") Then
+
             getfirstobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split(">")(0)))
             getsecondobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split(">")(1).Substring(1).Substring(0, getcondition.Split(">")(1).Substring(1).Length)))
+
             If Long.Parse(getfirstobject) > Long.Parse(getsecondobject) Then
                 Return "1"
             Else
                 Return "0"
             End If
+
         Else
             Return ""
         End If
     End Function
     Public Shared Function startcondition(getcondition As String, code As String, line As String, linescounter As String)
-        If verifycondition(getcondition) = "1" Then
+        If Not verifycondition(getcondition) = "1" Then
 
-        Else
-            Dim lineStart = linescounter
-            Dim lineStop = 0
-            Dim ouvrantes = 0
-            Dim exitforsecond = False
-            For countLines = lineStart + 1 To code.Split(ControlChars.Lf).Count - 1
-                Dim i = code.Split(ControlChars.Lf)(countLines)
+            Dim lineStart As Long = linescounter
+            Dim lineStop As Long = 0
+            Dim ouvrantes As Long = 0
+            Dim exitforsecond As Boolean = False
+
+            For countLines As Long = lineStart + 1 To code.Split(ControlChars.Lf).Count - 1
+
+                Dim i As String = code.Split(ControlChars.Lf)(countLines)
+
                 For Each countchar As String In i
+
                     If countchar = "{" Then
                         ouvrantes += 1
                     ElseIf countchar = "}" Then
+
                         If ouvrantes > 0 Then
                             ouvrantes -= 1
                         Else
@@ -214,16 +286,21 @@
                             exitforsecond = True
                             Exit For
                         End If
+
                     End If
+
                 Next
+
                 If exitforsecond = True Then
                     Exit For
                 End If
             Next
+
             Return Long.Parse(lineStop - 1).ToString
             Exit Function
-        End If
-        Return "abc"
 
+        End If
+
+        Return "abc"
     End Function
 End Class
