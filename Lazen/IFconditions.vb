@@ -138,30 +138,47 @@
             End If
         End If
     End Function
-    Public Shared Function verifyandofcondition(getcondition As String) As Boolean
+    Public Shared Function verifyandofcondition(getconditionOriginal As String) As Boolean
         Dim listOfVerifyConditions As New ListBox
         Dim counterOfCondition As Long = 0
 
-        For Each i As String In getcondition.Split("><")
+        Dim getCondition As String = getconditionOriginal
+        getCondition = getCondition.Replace("><", "[[AND_separator]]").Replace(">", "{{greater_than}}") _
+            .Replace("<", "{{minus_than}}").Replace(">=", "{{greater_or_equal_than}}") _
+            .Replace("<=", "{{minus_or_equal_than}}")
 
-            If Not i = "" Then
+        For Each i As String In getCondition.Split("[[AND_separator]]")
 
-                Dim conditionPartOriginal = i
+            If Not FormatConverters.isNothingOrSpace(i) Then
 
-                If counterOfCondition = getcondition.Split("><").Count - 1 Then
-                    conditionPartOriginal = conditionPartOriginal
+                '> : {{greater_than}}
+                '< : {{minus_than}}
+                '>= : {{greater_or_equal_than}}
+                '<= : {{minus_or_equal_than}}
+
+                Dim conditionPartOriginal As String = i
+
+                If conditionPartOriginal.StartsWith("AND_separator]]") Then
+                    conditionPartOriginal = conditionPartOriginal.Substring(15)
                 End If
 
-                If conditionPartOriginal.StartsWith("<") Then
-                    conditionPartOriginal = conditionPartOriginal.Substring(1)
-                End If
+                If counterOfCondition = getCondition.Split("><").Count - 1 Then
+                        conditionPartOriginal = conditionPartOriginal
+                    End If
 
-                conditionPartOriginal = FormatConverters.removeSpacesAtBeginningAndEnd(FormatConverters.ConvertToAbleToRead(conditionPartOriginal))
+                    If conditionPartOriginal.StartsWith("<") Then
+                        conditionPartOriginal = conditionPartOriginal.Substring(1)
+                    End If
+
+                    conditionPartOriginal = FormatConverters.removeSpacesAtBeginningAndEnd(FormatConverters.ConvertToAbleToRead(conditionPartOriginal)) _
+                    .Replace("{{greater_than}}", ">").Replace("{{minus_than}}", "<").Replace("{{greater_or_equal_than}}", ">=") _
+                    .Replace("{{minus_or_equal_than}}", "<=")
+
                 listOfVerifyConditions.Items.Add(verifycondition(conditionPartOriginal))
 
-            End If
+                End If
 
-            counterOfCondition += 1
+                counterOfCondition += 1
         Next
 
         For Each i2 As String In listOfVerifyConditions.Items
@@ -212,9 +229,14 @@
             End If
 
         ElseIf getcondition.Contains(">=") Then
+            MsgBox("getveryfirst: " & FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split(">=")(0)).Replace(" ", "{SPACE}"))
+            MsgBox("getverysecond: " & FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split(">=")(1).Substring(1).Substring(0, getcondition.Split(">=")(1).Substring(1).Length)))
 
             getfirstobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split(">=")(0)))
             getsecondobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split(">=")(1).Substring(1).Substring(0, getcondition.Split(">=")(1).Substring(1).Length)))
+
+            MsgBox("getfirst: " & getfirstobject)
+            MsgBox("getsecond: " & getsecondobject)
 
             If Long.Parse(getfirstobject) >= Long.Parse(getsecondobject) Then
                 Return "1"
