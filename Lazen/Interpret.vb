@@ -2,8 +2,10 @@
     Public Shared UsedFunctionsListBox As New ListBox
     Public Shared UsedFunctionsInConditions As New ListBox
     Public Shared UsedLinesForFunctions As New ListBox
+
     Public Shared entireCode As String = ""
     Shared codeLinesDelimiter = ControlChars.Lf
+
     Public Shared Function faitPartieDesLignesUtilisees(line As Long) As Boolean
         Dim found = False
         For Each i In UsedFunctionsListBox.Items
@@ -19,7 +21,6 @@
         Dim UsedFunctionsInConditions As New ListBox
         Dim found = False
         For Each i As String In UsedFunctionsInConditions.Items
-            'MsgBox(i & " / " & line)
             If i = line Then
                 found = True
                 Exit For
@@ -29,7 +30,6 @@
     End Function
     Public Shared lineBoostCopy As Long = 0
     Public Shared Function interpretLine(line As String, code As String, linescounter As Long, lineAccessible As TextBox, Optional isFunction As Boolean = False, Optional functionName As String = "") As String
-
         Voids.startVoid(line, linescounter)
         ForLoops.Start(line, code, linescounter, isFunction, functionName)
         ClassersInterpreter.start(line)
@@ -47,22 +47,11 @@
         Else
         End If
 
-        If Not isFunction Then ''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
-            Dim resultVoidStart = Voids.start(line, linescounter, code)
-            If IsNumeric(resultVoidStart) Then
-                lineAccessible.Text = resultVoidStart.ToString
-            Else
-            End If
-
-            Dim resultFunctionsStart = Functions.start(line, linescounter, code)
-            If IsNumeric(resultFunctionsStart) Then
-                lineAccessible.Text = resultFunctionsStart.ToString
-            Else
-            End If
-
-        End If ''''''''''''''''''''''''''''''''''''''''
-
+        Dim resultTicketStart = GotoTickets.Start(line)
+        If IsNumeric(resultTicketStart) Then
+            lineAccessible.Text = resultTicketStart.ToString
+        Else
+        End If
 
         Dim resultWhileStart = WhileLoops.Start(line, linescounter, code, isFunction, functionName)
         If IsNumeric(resultWhileStart) Then
@@ -70,6 +59,19 @@
         Else
         End If
 
+        If Not isFunction Then
+            Dim resultVoidStart = Voids.start(line, linescounter, code)
+            If IsNumeric(resultVoidStart) Then
+                lineAccessible.Text = resultVoidStart
+            Else
+            End If
+
+            Dim resultFunctionsStart = Functions.start(line, linescounter, code)
+            If IsNumeric(resultFunctionsStart) Then
+                lineAccessible.Text = resultFunctionsStart
+            Else
+            End If
+        End If
 
         Dim resultElseConditions = ElseConditions.start(line, linescounter, code)
         If IsNumeric(resultElseConditions) Then
@@ -98,7 +100,6 @@
 
                     Dim line As String = splitCode(Long.Parse(lineAccessible.Text))
                     Dim interpretAndGetResult As String = interpretLine(line, code, linesCounter, lineAccessible, isFunction, functionName)
-
                     If interpretAndGetResult = "exit" Then
                         Exit Sub
                     End If

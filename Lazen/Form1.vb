@@ -1,9 +1,10 @@
 ﻿Public Class Form1
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Interpret.entireCode = RichTextBox1.Text.Replace(vbTab, "")
+        GotoTickets.IdentifyTickets(Interpret.entireCode)
+
         Interpret.Start(RichTextBox1.Text)
         Variables.classers.Items.Clear()
-        '  Variables.classersVariablesNames.Items.Clear()
         Variables.classersVariablesValues.Items.Clear()
         Voids.ListOfCodeOfVoids.Items.Clear()
         Voids.ListOfVoidNames.Items.Clear()
@@ -24,7 +25,6 @@
 
         WhileLoops.ListOfWhileLoopsLines.Items.Clear()
     End Sub
-
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
     End Sub
 End Class
