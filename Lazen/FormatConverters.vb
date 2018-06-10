@@ -234,29 +234,63 @@ Public Class FormatConverters
                         Else
                             UserArguments = normalI.Substring(normalI.IndexOf("(") + 1)
                         End If
+
+
                         Dim UserArgumentsList As New List(Of String)
 
-                        For Each i2 As String In UserArguments.Split("::")
+                        For Each i2Original As String In UserArguments.Replace("::", "{separator_of_args}").Split("{separator_of_args}")
+                            Dim i2 As String = i2Original
+
                             If Not isNothingOrSpace(i2) Then
+                                If removeSpacesAtBeginningAndEnd(i2).StartsWith("separator_of_args}") Then
+                                    i2 = i2.Substring(18)
+                                End If
                                 UserArgumentsList.Add(removeSpacesAtBeginningAndEnd(i2))
+
                             End If
                         Next
 
-                        For Each i3 As String In FunctionArguments.Split("::")
+                        For Each i3Original As String In FunctionArguments.Replace("::", "{separator_of_args}").Split("{separator_of_args}")
+                            Dim i3 As String = i3Original
+
                             If Not isNothingOrSpace(i3) Then
+                                If i3.StartsWith("separator_of_args}") Then
+                                    i3 = i3.Substring(18)
+                                End If
                                 FunctionArgumentsList.Add(removeSpacesAtBeginningAndEnd(i3))
+
                             End If
                         Next
 
-                        If Not FunctionArgumentsList.Count = UserArgumentsList.Count Then
+                        Dim countOfNecessaryArgs As Long = 0
+
+                        For Each i5 As String In FunctionArgumentsList
+                            If Not i5.StartsWith("op:") Then
+                                countOfNecessaryArgs += 1
+                            End If
+                        Next
+
+                        If UserArgumentsList.Count < countOfNecessaryArgs Then
                             'pup error cause arguments are missing
                             Exit Function
                         End If
 
-                        Dim counter As Integer = 0
+                        Dim counter As Long = 0
 
-                        For Each i4 As String In FunctionArgumentsList
-                            Variables.EditVariable(i4.ToLower, getExpression(UserArgumentsList(counter)), getFunctionCallName.ToLower)
+                        For Each i4Original As String In FunctionArgumentsList
+
+                            Dim i4 As String = i4Original
+
+                            If i4.StartsWith("op:") Then
+                                i4 = i4.Substring(3)
+                                Try
+                                    Variables.EditVariable(i4.ToLower, getExpression(UserArgumentsList(counter)), getFunctionCallName.ToLower)
+                                Catch
+                                End Try
+                            Else
+                                Variables.EditVariable(i4.ToLower, getExpression(UserArgumentsList(counter)), getFunctionCallName.ToLower)
+                            End If
+
                             counter += 1
                         Next
 
