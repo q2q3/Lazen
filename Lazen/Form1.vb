@@ -24,6 +24,8 @@
         ForLoops.listOfForLoopsVariables.Items.Clear()
 
         WhileLoops.ListOfWhileLoopsLines.Items.Clear()
+        GotoTickets.ListOfTickets.Items.Clear()
+        GotoTickets.ListOfLines.Items.Clear()
     End Sub
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
     End Sub
