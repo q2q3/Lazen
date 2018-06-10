@@ -18,7 +18,7 @@
 
 
 <h1>Syntax</h1>
-<img src="https://image.ibb.co/hyOEOT/Capture.jpg"></img>
+<img src="https://image.ibb.co/n4QAJT/Capture.png"></img>
 
 
 <h1>Change-log</h1>
