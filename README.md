@@ -9,12 +9,11 @@
 • Variable Modification<br>
 • Classers to sort your variables correctly<br>
 • For Loops<br>
-• Voids With Arguments<br>
-• Functions With Arguments<br>
+• Voids With Arguments / Optional Arguments<br>
+• Functions With Arguments / Optional Arguments<br>
 • Maths Class Integrated<br>
 • Date-Time Class Integrated<br>
 • Goto Tickets<br>
-
 
 
 <h1>Syntax</h1>
@@ -31,6 +30,8 @@
 ♦ 06/02/2018 | Source-Code Re-Arranged, the Source-Code is now beautiful & easy to read<br>
 ♦ 06/09/2018 | IF Conditions' Bug Fixed<br>
 ♦ 06/10/2018 | Goto Tickets Added<br>
+♦ 06/10/2018 | Optional Arguments Added<br>
+
 
 <h1>Current Issues</h1>
 
