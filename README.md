@@ -13,6 +13,7 @@
 • Functions With Arguments<br>
 • Maths Class Integrated<br>
 • Date-Time Class Integrated<br>
+• Goto Tickets<br>
 
 
 
@@ -28,7 +29,8 @@
 ♦ 05/27/2018 | Variable Modification Re-Wrote, optimizations on the Syntax (especially on the object identification)<br>
 ♦ 05/02/2018 | Functions & Loops Incompatibility Fixed Completly<br>
 ♦ 06/02/2018 | Source-Code Re-Arranged, the Source-Code is now beautiful & easy to read<br>
-♦ 06/02/2018 | IF Conditions' Bug Fixed<br>
+♦ 06/09/2018 | IF Conditions' Bug Fixed<br>
+♦ 06/10/2018 | Goto Tickets Added<br>
 
 <h1>Current Issues</h1>
 
