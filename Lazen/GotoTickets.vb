@@ -1,6 +1,6 @@
 ﻿Public Class GotoTickets
-    Shared ListOfTickets As New ListBox
-    Shared ListOfLines As New ListBox
+    Public Shared ListOfTickets As New ListBox
+    Public Shared ListOfLines As New ListBox
 
     Public Shared Function Start(line As String) As String
 

@@ -72,6 +72,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CharacterVerification.vb" />
     <Compile Include="ClassersInterpreter.vb" />
     <Compile Include="ElseConditions.vb" />
     <Compile Include="Files.vb" />
@@ -85,6 +86,7 @@
     </Compile>
     <Compile Include="FormatConverters.vb" />
     <Compile Include="Functions.vb" />
+    <Compile Include="GotoTickets.vb" />
     <Compile Include="IFconditions.vb" />
     <Compile Include="IntegratedFunctions.vb" />
     <Compile Include="Interpret.vb" />

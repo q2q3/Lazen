@@ -1,5 +1,4 @@
-﻿
-Public Class Voids
+﻿Public Class Voids
     Public Shared ListOfVoidNames As New ListBox
     Public Shared ListOfCodeOfVoids As New ListBox
     Public Shared ListOfVoidVariables As New ListBox
@@ -10,6 +9,11 @@ Public Class Voids
             'void voidname(argument1 :: argument2){
             Dim voidname As String = FormatConverters.removeSpacesAtBeginningAndEnd(line.Substring(line.ToLower.IndexOf("void") + 4)).Split("(")(0).ToLower
             Dim voidarguments As String = FormatConverters.ConvertToAbleToRead(FormatConverters.removeSpacesAtBeginningAndEnd(line.Substring(line.IndexOf("(")).Substring(0, line.Substring(line.IndexOf("(")).LastIndexOf("{"))))
+
+            If CharacterVerification.Verify(voidname) <> "ok" Then
+                'pup error cause invalid characters in voidname : CharacterVerification.Verify(voidname).Split("-")(1)
+                Exit Function
+            End If
 
             If Not voidExists(voidname) Then
 

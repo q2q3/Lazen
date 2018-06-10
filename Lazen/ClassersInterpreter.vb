@@ -4,6 +4,12 @@
 
             Dim classerName As String = FormatConverters.ConvertToAbleToRead(FormatConverters.removeSpacesAtBeginningAndEnd(FormatConverters.removeSpacesAtBeginningAndEnd(line).ToLower.Substring(7)))
 
+            If CharacterVerification.Verify(classerName) <> "ok" Then
+                'pup error cause invalid characters in voidname : CharacterVerification.Verify(classerName).Split("-")(1)
+                Exit Sub
+            End If
+
+
             If Not Variables.ClasserExists(classerName.ToLower) Then
                 Variables.CreateClasser(classerName.ToLower)
             Else

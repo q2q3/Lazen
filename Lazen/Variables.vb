@@ -9,6 +9,12 @@
 
             If Not VariableExists(variable.ToLower, classer.ToLower) Then
 
+                If CharacterVerification.Verify(variable) <> "ok" Then
+                    'pup error cause invalid characters in voidname : CharacterVerification.Verify(variable).Split("-")(1)
+                    Exit Sub
+                End If
+
+
                 Dim getindexofclasser As Long = getIndexToClasser(classer.ToLower)
 
                 Dim SaveClasserContent As String = classers.Items(getindexofclasser)

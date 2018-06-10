@@ -119,7 +119,7 @@ Public Class FormatConverters
         Dim tagSkipCounter As Long = 0
         Dim finalobject As String = ""
 
-        For i22 = 0 To input.Split(",").Count - 1
+        For i22 As Long = 0 To input.Split(",").Count - 1
             Dim i As String = input.Split(",")(i22)
             Dim objetfictif As String = ""
 
@@ -156,6 +156,7 @@ Public Class FormatConverters
     Public Shared Function removeHashTagsAtTheBeginning(inputs As String) As String
         Dim counterOfHashTags As Long = 0
         Dim input As String = removeSpacesAtBeginningAndEnd(inputs)
+
         For i55 As Long = 0 To input.Length - 1
             Dim i As String = input(i55)
             If i = "#" Then
@@ -164,6 +165,7 @@ Public Class FormatConverters
                 Exit For
             End If
         Next
+
         Return input.Substring(counterOfHashTags)
     End Function
     Public Shared Function convertTrueFalse(inputs As Boolean) As String
@@ -176,6 +178,8 @@ Public Class FormatConverters
         End If
     End Function
     Public Shared Function getExpression(inputRaw As String) As String
+
+        'print(&hey(&hi(arg1 :: "hey", " ", arg2), "a", "b"));
 
         Dim input As String = inputRaw
 

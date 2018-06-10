@@ -229,14 +229,10 @@
             End If
 
         ElseIf getcondition.Contains(">=") Then
-            MsgBox("getveryfirst: " & FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split(">=")(0)).Replace(" ", "{SPACE}"))
-            MsgBox("getverysecond: " & FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split(">=")(1).Substring(1).Substring(0, getcondition.Split(">=")(1).Substring(1).Length)))
 
             getfirstobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split(">=")(0)))
             getsecondobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split(">=")(1).Substring(1).Substring(0, getcondition.Split(">=")(1).Substring(1).Length)))
 
-            MsgBox("getfirst: " & getfirstobject)
-            MsgBox("getsecond: " & getsecondobject)
 
             If Long.Parse(getfirstobject) >= Long.Parse(getsecondobject) Then
                 Return "1"

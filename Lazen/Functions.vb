@@ -13,6 +13,12 @@
             Dim getFunctionName As String = FormatConverters.removeSpacesAtBeginningAndEnd(FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(0, FormatConverters.removeSpacesAtBeginningAndEnd(line).IndexOf("(")).Substring(8)).ToLower
             Dim getFunctionArguments As String = FormatConverters.ConvertToAbleToRead(FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(FormatConverters.removeSpacesAtBeginningAndEnd(line).IndexOf("(")).Substring(0, FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(FormatConverters.removeSpacesAtBeginningAndEnd(line).IndexOf("(")).Length - 1)).ToLower
 
+            If CharacterVerification.Verify(getFunctionName) <> "ok" Then
+                'pup error cause invalid characters in voidname : CharacterVerification.Verify(getFunctionName).Split("-")(1)
+                Exit Function
+            End If
+
+
             If Not FormatConverters.isNothingOrSpace(getFunctionName) Then
 
                 If Not Variables.ClasserExists(getFunctionName) Then
