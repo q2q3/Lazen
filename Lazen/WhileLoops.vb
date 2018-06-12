@@ -9,7 +9,7 @@
 
         For i As Long = linescounter + 1 To input.Split(ControlChars.Lf).Count - 1
 
-            Dim getLine As String = input.Split(ControlChars.Lf)(i)
+            Dim getLine As String = FormatConverters.removeSpacesAtBeginningAndEnd(input.Split(ControlChars.Lf)(i))
             Dim ouvrantes As Long = 0
 
             For Each i2 As String In getLine
@@ -98,27 +98,29 @@
 
             For i2 As Long = linescounter + 1 To code.Split(ControlChars.Lf).Count - 1
 
-                Dim getLine As String = code.Split(ControlChars.Lf)(i2)
+                Dim getLine As String = FormatConverters.removeSpacesAtBeginningAndEnd(code.Split(ControlChars.Lf)(i2))
 
-                If getLine.Contains("{") Then
-                    ouvrantes2 += 1
-                ElseIf getLine.Contains("}") Then
-                    ouvrantes2 -= 1
-                End If
+                For Each i3 As String In getLine
+                    If i3 = "{" Then
+                        ouvrantes2 += 1
+                    ElseIf i3 = "}" Then
+                        ouvrantes2 -= 1
+                    End If
 
-                If ouvrantes2 = 0 Then
-                    Exit For
-                End If
+                    If ouvrantes2 = 0 Then
+                        Exit For
+                    End If
+                Next
 
                 buildCode += getLine & ControlChars.Lf
 
-            Next
+                Next
 
-            '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+                '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 
 
-            If getCondition.Contains("//") Or getCondition.Contains("><") Then
+                If getCondition.Contains("//") Or getCondition.Contains("><") Then
 
                 If Not getCondition.Contains("//") Then
                     If getCondition.Contains("><") Then
@@ -139,7 +141,7 @@
                             Dim exitforsecond As Boolean = False
                             For countLines As Long = lineStart + 1 To code.Split(ControlChars.Lf).Count - 1
 
-                                Dim i As String = code.Split(ControlChars.Lf)(countLines)
+                                Dim i As String = FormatConverters.removeSpacesAtBeginningAndEnd(code.Split(ControlChars.Lf)(countLines))
 
                                 For Each countchar As String In i
 
@@ -196,7 +198,7 @@
 
                         For countLines As Long = lineStart + 1 To code.Split(ControlChars.Lf).Count - 1
 
-                            Dim i As String = code.Split(ControlChars.Lf)(countLines)
+                            Dim i As String = FormatConverters.removeSpacesAtBeginningAndEnd(code.Split(ControlChars.Lf)(countLines))
 
                             For Each countchar As String In i
 
@@ -275,19 +277,22 @@
 
             For i As Long = lineStart + 1 To Interpret.entireCode.Split(ControlChars.Lf).Count - 1
 
-                Dim getLine = Interpret.entireCode.Split(ControlChars.Lf)(i)
+                Dim getLine As String = Interpret.entireCode.Split(ControlChars.Lf)(i)
 
-                If getLine.Contains("}") Then
-                    ouvrantes -= 1
-                ElseIf getLine.Contains("{") Then
-                    ouvrantes += 1
-                End If
+                For Each i2 As String In getLine
+                    If getLine.Contains("}") Then
+                        ouvrantes -= 1
+                    ElseIf getLine.Contains("{") Then
+                        ouvrantes += 1
+                    End If
 
-                If ouvrantes = 1 Then
-                    lineStop = i
-                    tellToExitFor = True
-                    Exit For
-                End If
+                    If ouvrantes = 1 Then
+                        lineStop = i
+                        tellToExitFor = True
+                        Exit For
+                    End If
+
+                Next
 
                 If tellToExitFor Then
                     Exit For

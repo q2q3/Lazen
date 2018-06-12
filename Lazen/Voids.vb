@@ -27,7 +27,7 @@
 
                 For i As Long = actualLine To code.Split(ControlChars.Lf).Count - 1
 
-                    Dim getLine As String = code.Split(ControlChars.Lf)(i)
+                    Dim getLine As String = FormatConverters.removeSpacesAtBeginningAndEnd(code.Split(ControlChars.Lf)(i))
 
                     For Each i2 As String In getLine
 
@@ -52,9 +52,10 @@
                 Next
 
                 For countToAddToCodeOfVoid = actualLine To lineStop - 1
-                    Dim getline = code.Split(ControlChars.Lf)(countToAddToCodeOfVoid)
+                    Dim getline As String = code.Split(ControlChars.Lf)(countToAddToCodeOfVoid)
                     codeOfVoid += getline & ControlChars.Lf
                 Next
+
 
                 ListOfCodeOfVoids.Items.Add(codeOfVoid)
 
@@ -94,7 +95,7 @@
                         End If
 
 
-                        End If
+                    End If
 
                     miniCounter += 1
                 Next
@@ -125,6 +126,8 @@
             Dim CodeOfVoid As String = ListOfCodeOfVoids.Items(indexOfVoidName)
             Dim counter As Long = 0
 
+
+
             Dim countOfNecessaryArgs As Long = 0
 
             For Each countingNecessaryArgs As String In ArgumentsOfVoid.ToString.Split("{separator_of_arguments}")
@@ -134,8 +137,11 @@
                     iss = iss.Substring(23)
                 End If
 
-                If Not FormatConverters.removeSpacesAtBeginningAndEnd(iss).ToLower.StartsWith("op:") Then
+                If Not FormatConverters.removeSpacesAtBeginningAndEnd(iss).ToLower.StartsWith("op:") _
+                    AndAlso Not FormatConverters.isNothingOrSpace(FormatConverters.removeSpacesAtBeginningAndEnd(iss)) Then
+
                     countOfNecessaryArgs += 1
+
                 End If
 
             Next

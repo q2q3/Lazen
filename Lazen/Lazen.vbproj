@@ -86,6 +86,7 @@
     </Compile>
     <Compile Include="FormatConverters.vb" />
     <Compile Include="Functions.vb" />
+    <Compile Include="FVArranging.vb" />
     <Compile Include="GotoTickets.vb" />
     <Compile Include="IFconditions.vb" />
     <Compile Include="IntegratedFunctions.vb" />

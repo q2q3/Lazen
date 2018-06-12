@@ -88,7 +88,7 @@ Public Class ForLoops
             Dim tellToExitFor As Boolean = False
             For countLines As Long = linescounter + 1 To code.Split(ControlChars.Lf).Count - 1
 
-                Dim actualLine = code.Split(ControlChars.Lf)(countLines)
+                Dim actualLine As String = FormatConverters.removeSpacesAtBeginningAndEnd(code.Split(ControlChars.Lf)(countLines))
 
                 For Each i As String In actualLine
 

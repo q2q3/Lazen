@@ -1,6 +1,6 @@
 ﻿Imports System.IO
 Public Class FormatConverters
-    Public Shared Function removespacesAtTheEnd(inputs As String) As String
+    Public Shared Function removeSpacesAtTheEnd(inputs As String) As String
         Try
 
             Dim counter As Integer = 0
@@ -20,6 +20,24 @@ Public Class FormatConverters
         End Try
 
     End Function
+    Public Shared Function DeleteFirstLine(input As String) As String
+        Dim b As String() = Split(input, ControlChars.Lf)
+        Return String.Join(ControlChars.Lf, b, 1, b.Length - 1)
+    End Function
+    Public Shared Function DeleteLines(input As String, listOfLines As List(Of Long)) As String
+        Dim counter As Long = 0
+        Dim result As String = ""
+        For Each i As String In input.Split(ControlChars.Lf)
+            If Not listOfLines.Contains(counter) Then
+                result &= i & ControlChars.Lf
+            End If
+            counter += 1
+        Next
+        If result.ToLower.EndsWith(ControlChars.Lf) Then
+            result = result.Substring(0, result.Length - 1)
+        End If
+        Return result
+    End Function
     Public Shared Function removeSpacesAtBeginningAndEnd(input As String) As String
         Dim counter As Integer = 0
 
@@ -30,7 +48,8 @@ Public Class FormatConverters
                 Exit For
             End If
         Next
-        Return removespacesAtTheEnd(input.Substring(counter))
+
+        Return removeSpacesAtTheEnd(input.Substring(counter))
     End Function
     Public Shared Function getBeforeParenthesis(input As String) As String
         Dim result As String = input

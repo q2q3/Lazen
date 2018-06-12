@@ -30,9 +30,9 @@
                     Dim tellToExitFor As Boolean = False
                     Dim codebuilt As String = ""
 
-                    For countLines = linescounter + 1 To code.Split(ControlChars.Lf).Count - 1
+                    For countLines As Long = linescounter + 1 To code.Split(ControlChars.Lf).Count - 1
 
-                        Dim getLine As String = code.Split(ControlChars.Lf)(countLines)
+                        Dim getLine As String = FormatConverters.removeSpacesAtBeginningAndEnd(code.Split(ControlChars.Lf)(countLines))
 
                         For Each i As String In getLine
 
@@ -58,7 +58,7 @@
                     Next
 
                     For lineStartToLineStop As Long = lineStart To lineStop - 1
-                        Interpret.UsedLinesForFunctions.Items.Add(lineStartToLineStop)
+                        Interpret.UsedLinesForFunctionsAndVoids.Items.Add(lineStartToLineStop)
                         codebuilt += code.Split(ControlChars.Lf)(lineStartToLineStop) & ControlChars.Lf
                     Next
 

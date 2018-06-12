@@ -42,7 +42,7 @@
 
                             For countLines As Long = lineStart + 1 To code.Split(ControlChars.Lf).Count - 1
 
-                                Dim i As String = code.Split(ControlChars.Lf)(countLines)
+                                Dim i As String = FormatConverters.removeSpacesAtBeginningAndEnd(code.Split(ControlChars.Lf)(countLines))
 
                                 For Each countchar As String In i
 
@@ -102,7 +102,7 @@
 
                         For countLines As Long = lineStart + 1 To code.Split(ControlChars.Lf).Count - 1
 
-                            Dim i As String = code.Split(ControlChars.Lf)(countLines)
+                            Dim i As String = FormatConverters.removeSpacesAtBeginningAndEnd(code.Split(ControlChars.Lf)(countLines))
 
                             For Each countchar As String In i
 
@@ -289,7 +289,7 @@
 
             For countLines As Long = lineStart + 1 To code.Split(ControlChars.Lf).Count - 1
 
-                Dim i As String = code.Split(ControlChars.Lf)(countLines)
+                Dim i As String = FormatConverters.removeSpacesAtBeginningAndEnd(code.Split(ControlChars.Lf)(countLines))
 
                 For Each countchar As String In i
 

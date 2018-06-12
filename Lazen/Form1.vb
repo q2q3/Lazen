@@ -3,7 +3,11 @@
         Interpret.entireCode = RichTextBox1.Text.Replace(vbTab, "")
         GotoTickets.IdentifyTickets(Interpret.entireCode)
 
-        Interpret.Start(RichTextBox1.Text)
+        '--------------------------------------------------------------------'
+        Dim arrangedCode As String = FVArranging.Arrange(Interpret.entireCode)
+        Interpret.Start(arrangedCode)
+        '--------------------------------------------------------------------'
+
         Variables.classers.Items.Clear()
         Variables.classersVariablesValues.Items.Clear()
         Voids.ListOfCodeOfVoids.Items.Clear()
@@ -11,7 +15,7 @@
         Voids.ListOfVoidVariables.Items.Clear()
         Interpret.UsedFunctionsListBox.Items.Clear()
         Interpret.UsedFunctionsInConditions.Items.Clear()
-        Interpret.UsedLinesForFunctions.Items.Clear()
+        Interpret.UsedLinesForFunctionsAndVoids.Items.Clear()
         Functions.listOfFunctionsNames.Items.Clear()
         Functions.listOfFunctionNamesForReturn.Items.Clear()
         Functions.listOfFunctionReturns.Items.Clear()

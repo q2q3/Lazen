@@ -1,7 +1,7 @@
 ﻿Public Class Interpret
     Public Shared UsedFunctionsListBox As New ListBox
     Public Shared UsedFunctionsInConditions As New ListBox
-    Public Shared UsedLinesForFunctions As New ListBox
+    Public Shared UsedLinesForFunctionsAndVoids As New ListBox
 
     Public Shared entireCode As String = ""
     Shared codeLinesDelimiter = ControlChars.Lf
@@ -66,11 +66,11 @@
             Else
             End If
 
-            Dim resultFunctionsStart = Functions.start(line, linescounter, code)
-            If IsNumeric(resultFunctionsStart) Then
-                lineAccessible.Text = resultFunctionsStart
-            Else
-            End If
+            '    Dim resultFunctionsStart = Functions.start(line, linescounter, code)
+            '   If IsNumeric(resultFunctionsStart) Then
+            '    lineAccessible.Text = resultFunctionsStart
+            'Else
+            'End If
         End If
 
         Dim resultElseConditions = ElseConditions.start(line, linescounter, code)
@@ -106,8 +106,8 @@
 
                     lineAccessible.Text = Long.Parse(lineAccessible.Text + 1).ToString
                     linesCounter = Long.Parse(lineAccessible.Text)
-
                 End If
+
             Next
         Catch ex As StackOverflowException
             'pup error cause an infinite loop occured
