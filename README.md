@@ -31,6 +31,7 @@
 ♦ 06/09/2018 | IF Conditions' Bug Fixed<br>
 ♦ 06/10/2018 | Goto Tickets Added<br>
 ♦ 06/10/2018 | Optional Arguments Added<br>
+♦ 06/13/2018 | Voids Fixed, Voids & Functions Arrangement Added, the Interpreter now don't bother where are the functions and the voids (so it executes the functions and the voids first)<br>
 
 
 <h1>Current Issues</h1>
