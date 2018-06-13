@@ -142,10 +142,10 @@ Public Class ForLoops
 
                 Next
 
+
                 If doIHaveToExitLoop Then
                     Exit For
                 End If
-
                 Interpret.Start(finalresultForLoop, isFunction, functionName)
                 Variables.EditVariable(variableName, loopFor, variableClasser)
             Next

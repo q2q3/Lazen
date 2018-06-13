@@ -48,7 +48,6 @@
     End Function
     Public Shared Function Start(line As String, linescounter As Long, code As String, Optional isFunction As Boolean = False, Optional functionName As String = "")
         If FormatConverters.getBeforeParenthesis(FormatConverters.removeSpacesAtBeginningAndEnd(line)).ToLower = "while" Then
-
             ''''''''''''''''''''''''''''''''''
 
             'examples
@@ -114,13 +113,13 @@
 
                 buildCode += getLine & ControlChars.Lf
 
-                Next
+            Next
 
-                '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+            '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 
 
-                If getCondition.Contains("//") Or getCondition.Contains("><") Then
+            If getCondition.Contains("//") Or getCondition.Contains("><") Then
 
                 If Not getCondition.Contains("//") Then
                     If getCondition.Contains("><") Then

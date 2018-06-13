@@ -1,4 +1,4 @@
-Public Class Interpret
+﻿Public Class Interpret
     Public Shared UsedFunctionsListBox As New ListBox
     Public Shared UsedFunctionsInConditions As New ListBox
     Public Shared UsedLinesForFunctionsAndVoids As New ListBox
@@ -59,6 +59,20 @@ Public Class Interpret
         Else
         End If
 
+        If Not isFunction Then
+            Dim resultVoidStart = Voids.start(line, linescounter, code)
+            If IsNumeric(resultVoidStart) Then
+                lineAccessible.Text = resultVoidStart
+            Else
+            End If
+
+            Dim resultFunctionsStart = Functions.start(line, linescounter, code)
+            If IsNumeric(resultFunctionsStart) Then
+                lineAccessible.Text = resultFunctionsStart
+            Else
+            End If
+        End If
+
         Dim resultElseConditions = ElseConditions.start(line, linescounter, code)
         If IsNumeric(resultElseConditions) Then
             lineAccessible.Text = resultElseConditions.ToString
@@ -85,14 +99,14 @@ Public Class Interpret
                 If Not Long.Parse(lineAccessible.Text) > splitCode.Count - 1 Then
 
                     Dim line As String = splitCode(Long.Parse(lineAccessible.Text))
-                    Dim interpretAndGetResult As String = interpretLine(line, code, linesCounter, lineAccessible, isFunction, functionName)
-                    If interpretAndGetResult = "exit" Then
-                        Exit Sub
-                    End If
+                        Dim interpretAndGetResult As String = interpretLine(line, code, linesCounter, lineAccessible, isFunction, functionName)
+                        If interpretAndGetResult = "exit" Then
+                            Exit Sub
+                        End If
 
                     lineAccessible.Text = Long.Parse(lineAccessible.Text + 1).ToString
-                    linesCounter = Long.Parse(lineAccessible.Text)
-                End If
+                        linesCounter = Long.Parse(lineAccessible.Text)
+                    End If
 
             Next
         Catch ex As StackOverflowException

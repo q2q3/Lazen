@@ -85,14 +85,17 @@
 
                         Return lineStop
                     Else
+                        Return "err1"
                         'pup error cause function returns nothing
                         Return lineStop
                     End If
                 Else
+                    Return "err2"
                     'pup error cause a classer with the name getfunctionname is already existing
                     Exit Function
                 End If
             Else
+                Return "err3"
                 'pup error cause function name is missing
                 Exit Function
             End If
