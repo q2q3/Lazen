@@ -1,4 +1,4 @@
-﻿Public Class Interpret
+Public Class Interpret
     Public Shared UsedFunctionsListBox As New ListBox
     Public Shared UsedFunctionsInConditions As New ListBox
     Public Shared UsedLinesForFunctionsAndVoids As New ListBox
@@ -57,20 +57,6 @@
         If IsNumeric(resultWhileStart) Then
             lineAccessible.Text = resultWhileStart.ToString
         Else
-        End If
-
-        If Not isFunction Then
-            Dim resultVoidStart = Voids.start(line, linescounter, code)
-            If IsNumeric(resultVoidStart) Then
-                lineAccessible.Text = resultVoidStart
-            Else
-            End If
-
-            '    Dim resultFunctionsStart = Functions.start(line, linescounter, code)
-            '   If IsNumeric(resultFunctionsStart) Then
-            '    lineAccessible.Text = resultFunctionsStart
-            'Else
-            'End If
         End If
 
         Dim resultElseConditions = ElseConditions.start(line, linescounter, code)
