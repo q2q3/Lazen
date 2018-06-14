@@ -1,7 +1,20 @@
 ﻿Public Class IFconditions
+    Public Shared is_IFNOT_condition As Boolean = False
+
     Public Shared Function start(line As String, code As String, linescounter As Long)
-        If FormatConverters.removeSpacesAtBeginningAndEnd(line).ToLower.StartsWith("if") Then
-            Dim getCondition As String = FormatConverters.ConvertToAbleToRead(FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(2)).Substring(0, FormatConverters.ConvertToAbleToRead(FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(2)).LastIndexOf("{"))
+        If FormatConverters.removeSpacesAtBeginningAndEnd(line).ToLower.StartsWith("if") Or FormatConverters.removeSpacesAtBeginningAndEnd(line).ToLower.StartsWith("ifnot") Then
+            Dim getCondition As String = ""
+
+            If FormatConverters.removeSpacesAtBeginningAndEnd(line).ToLower.StartsWith("ifnot") Then
+                'ifnot(1){
+                is_IFNOT_condition = True
+                getCondition = FormatConverters.ConvertToAbleToRead(FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(5).Substring(0, FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(5).LastIndexOf("{") - 1))
+            ElseIf FormatConverters.removeSpacesAtBeginningAndEnd(line).ToLower.StartsWith("if") Then
+                'if(1){
+                is_IFNOT_condition = False
+                getCondition = FormatConverters.ConvertToAbleToRead(FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(2).Substring(0, FormatConverters.removeSpacesAtBeginningAndEnd(line).Substring(2).LastIndexOf("{") - 1))
+            End If
+
 
             If getCondition.Contains("//") Or getCondition.Contains("><") Then
 
@@ -29,12 +42,27 @@
                 If Not getCondition.Contains("//") Then
                     If getCondition.Contains("><") Then
 
-                        If verifyandofcondition(getCondition) Then
+                        Dim permitsToRunCode As Boolean = False
 
-                            'allow to execute code
+                        If is_IFNOT_condition Then
+                            If Not verifyandofcondition(getCondition) Then
 
+                                'allow to execute code
+
+                            Else
+                                permitsToRunCode = True
+                            End If
                         Else
+                            If verifyandofcondition(getCondition) Then
 
+                                'allow to execute code
+
+                            Else
+                                permitsToRunCode = True
+                            End If
+                        End If
+
+                        If permitsToRunCode Then
                             Dim lineStart As Long = linescounter
                             Dim lineStop As Long = 0
                             Dim ouvrantes As Long = 0
@@ -68,6 +96,7 @@
 
                             Return Long.Parse(lineStop - 1).ToString
                         End If
+
                     End If
 
                 ElseIf getCondition.Contains("//") Then
@@ -93,47 +122,61 @@
 
                     Next
 
-                    If Not amountOfTrueConditions > 0 Then
+                    Dim permitsToRunCode2 As Boolean = False
 
-                        Dim lineStart As Long = linescounter
-                        Dim lineStop As Long = 0
-                        Dim ouvrantes As Long = 0
-                        Dim exitforsecond As Boolean = False
+                    If is_IFNOT_condition Then
+                        If Not amountOfTrueConditions = 0 Then
+                            'allow to execute code
+                        Else
+                            permitsToRunCode2 = True
+                        End If
+                    Else
+                        If Not amountOfTrueConditions > 0 Then
+                            permitsToRunCode2 = True
+                        Else
+                            'allow to execute code
+                        End If
+                    End If
 
-                        For countLines As Long = lineStart + 1 To code.Split(ControlChars.Lf).Count - 1
 
-                            Dim i As String = FormatConverters.removeSpacesAtBeginningAndEnd(code.Split(ControlChars.Lf)(countLines))
+                    If permitsToRunCode2 Then
+                            Dim lineStart As Long = linescounter
+                            Dim lineStop As Long = 0
+                            Dim ouvrantes As Long = 0
+                            Dim exitforsecond As Boolean = False
 
-                            For Each countchar As String In i
+                            For countLines As Long = lineStart + 1 To code.Split(ControlChars.Lf).Count - 1
 
-                                If countchar = "{" Then
-                                    ouvrantes += 1
-                                ElseIf countchar = "}" Then
+                                Dim i As String = FormatConverters.removeSpacesAtBeginningAndEnd(code.Split(ControlChars.Lf)(countLines))
 
-                                    If ouvrantes > 0 Then
-                                        ouvrantes -= 1
-                                    Else
-                                        lineStop = countLines
-                                        exitforsecond = True
-                                        Exit For
+                                For Each countchar As String In i
+
+                                    If countchar = "{" Then
+                                        ouvrantes += 1
+                                    ElseIf countchar = "}" Then
+
+                                        If ouvrantes > 0 Then
+                                            ouvrantes -= 1
+                                        Else
+                                            lineStop = countLines
+                                            exitforsecond = True
+                                            Exit For
+                                        End If
+
                                     End If
 
+                                Next
+
+                                If exitforsecond = True Then
+                                    Exit For
                                 End If
 
                             Next
 
-                            If exitforsecond = True Then
-                                Exit For
-                            End If
-
-                        Next
-
-                        Return Long.Parse(lineStop - 1).ToString
-                    Else
-                        'allow to execute code
+                            Return Long.Parse(lineStop - 1).ToString
+                        End If
                     End If
-                End If
-            Else
+                Else
                 Return startcondition(getCondition, code, line, linescounter)
             End If
         End If
@@ -163,22 +206,22 @@
                 End If
 
                 If counterOfCondition = getCondition.Split("><").Count - 1 Then
-                        conditionPartOriginal = conditionPartOriginal
-                    End If
+                    conditionPartOriginal = conditionPartOriginal
+                End If
 
-                    If conditionPartOriginal.StartsWith("<") Then
-                        conditionPartOriginal = conditionPartOriginal.Substring(1)
-                    End If
+                If conditionPartOriginal.StartsWith("<") Then
+                    conditionPartOriginal = conditionPartOriginal.Substring(1)
+                End If
 
-                    conditionPartOriginal = FormatConverters.removeSpacesAtBeginningAndEnd(FormatConverters.ConvertToAbleToRead(conditionPartOriginal)) _
-                    .Replace("{{greater_than}}", ">").Replace("{{minus_than}}", "<").Replace("{{greater_or_equal_than}}", ">=") _
-                    .Replace("{{minus_or_equal_than}}", "<=")
+                conditionPartOriginal = FormatConverters.removeSpacesAtBeginningAndEnd(FormatConverters.ConvertToAbleToRead(conditionPartOriginal)) _
+                .Replace("{{greater_than}}", ">").Replace("{{minus_than}}", "<").Replace("{{greater_or_equal_than}}", ">=") _
+                .Replace("{{minus_or_equal_than}}", "<=")
 
                 listOfVerifyConditions.Items.Add(verifycondition(conditionPartOriginal))
 
-                End If
+            End If
 
-                counterOfCondition += 1
+            counterOfCondition += 1
         Next
 
         For Each i2 As String In listOfVerifyConditions.Items
@@ -280,8 +323,24 @@
         End If
     End Function
     Public Shared Function startcondition(getcondition As String, code As String, line As String, linescounter As String)
-        If Not verifycondition(getcondition) = "1" Then
 
+        Dim permitsToRunCode3 As Boolean = False
+
+        If is_IFNOT_condition Then
+            If verifycondition(getcondition) = "0" Then
+                'let the code start
+            Else
+                permitsToRunCode3 = True
+            End If
+        Else
+            If verifycondition(getcondition) = "1" Then
+                'let the code start
+            Else
+                permitsToRunCode3 = True
+            End If
+        End If
+
+        If permitsToRunCode3 Then
             Dim lineStart As Long = linescounter
             Dim lineStop As Long = 0
             Dim ouvrantes As Long = 0
@@ -316,7 +375,6 @@
 
             Return Long.Parse(lineStop - 1).ToString
             Exit Function
-
         End If
 
         Return "abc"
