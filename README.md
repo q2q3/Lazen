@@ -14,7 +14,7 @@
 • Maths Class Integrated<br>
 • Date-Time Class Integrated<br>
 • Goto Tickets<br>
-
+• IfNot Condition Added<br>
 
 <h1>Syntax</h1>
 <img src="https://image.ibb.co/cOo0k8/Capture.png"></img>
@@ -32,6 +32,7 @@
 ♦ 06/10/2018 | Goto Tickets Added<br>
 ♦ 06/10/2018 | Optional Arguments Added<br>
 ♦ 06/13/2018 | Voids Fixed, Voids & Functions Arrangement Added, the Interpreter now don't bother where are the functions and the voids (so it executes the functions and the voids first)<br>
+♦ 06/15/2018 | IfNot Condition Added<br>
 
 
 <h1>Current Issues</h1>
