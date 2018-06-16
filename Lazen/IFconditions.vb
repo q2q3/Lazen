@@ -273,50 +273,79 @@
 
         ElseIf getcondition.Contains(">=") Then
 
-            getfirstobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split(">=")(0)))
-            getsecondobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split(">=")(1).Substring(1).Substring(0, getcondition.Split(">=")(1).Substring(1).Length)))
+            getfirstobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split(">=")(0))).Replace(".", ",")
+            getsecondobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split(">=")(1).Substring(1).Substring(0, getcondition.Split(">=")(1).Substring(1).Length))).Replace(".", ",")
 
+            If Not getfirstobject.Contains(",") Then getfirstobject &= ",0"
+            If Not getsecondobject.Contains(",") Then getsecondobject &= ",0"
 
-            If Long.Parse(getfirstobject) >= Long.Parse(getsecondobject) Then
-                Return "1"
-            Else
+            Try
+                If Double.Parse(getfirstobject) >= Double.Parse(getsecondobject) Then
+                    Return "1"
+                Else
+                    Return "0"
+                End If
+            Catch ex As FormatException
+                'pup error cause one or multiple values are not in a correct format
                 Return "0"
-            End If
-
+            End Try
         ElseIf getcondition.Contains("=") Then
 
-            getfirstobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split("=")(0)))
-            getsecondobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split("=")(1).Substring(1).Substring(0, getcondition.Split("=")(1).Substring(1).Length)))
+            getfirstobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split("=")(0))).Replace(".", ",")
+            getsecondobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split("=")(1).Substring(1).Substring(0, getcondition.Split("=")(1).Substring(1).Length))).Replace(".", ",")
 
-            If getfirstobject = getsecondobject Then
-                Return "1"
-            Else
+            If Not getfirstobject.Contains(",") Then getfirstobject &= ",0"
+            If Not getsecondobject.Contains(",") Then getsecondobject &= ",0"
+
+            Try
+                If Double.Parse(getfirstobject) = Double.Parse(getsecondobject) Then
+                    Return "1"
+                Else
+                    Return "0"
+                End If
+            Catch ex As FormatException
+                'pup error cause one or multiple values are not in a correct format
                 Return "0"
-            End If
+            End Try
 
         ElseIf getcondition.Contains("<") Then
 
-            getfirstobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split("<")(0)))
-            getsecondobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split("<")(1).Substring(1).Substring(0, getcondition.Split("<")(1).Substring(1).Length)))
+            getfirstobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split("<")(0))).Replace(".", ",")
+            getsecondobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split("<")(1).Substring(1).Substring(0, getcondition.Split("<")(1).Substring(1).Length))).Replace(".", ",")
 
-            If Long.Parse(getfirstobject) < Long.Parse(getsecondobject) Then
-                Return "1"
-            Else
+            If Not getfirstobject.Contains(",") Then getfirstobject &= ",0"
+            If Not getsecondobject.Contains(",") Then getsecondobject &= ",0"
+
+            Try
+                If Double.Parse(getfirstobject) < Double.Parse(getsecondobject) Then
+                    Return "1"
+                Else
+                    Return "0"
+                End If
+            Catch ex As FormatException
+                'pup error cause one or multiple values are not in a correct format
                 Return "0"
-            End If
-
-            Return ""
+            End Try
 
         ElseIf getcondition.Contains(">") Then
 
-            getfirstobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split(">")(0)))
-            getsecondobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split(">")(1).Substring(1).Substring(0, getcondition.Split(">")(1).Substring(1).Length)))
+            getfirstobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split(">")(0))).Replace(".", ",")
+            getsecondobject = FormatConverters.getExpression(FormatConverters.removeSpacesAtBeginningAndEnd(getcondition.Split(">")(1).Substring(1).Substring(0, getcondition.Split(">")(1).Substring(1).Length))).Replace(".", ",")
 
-            If Long.Parse(getfirstobject) > Long.Parse(getsecondobject) Then
-                Return "1"
-            Else
+            If Not getfirstobject.Contains(",") Then getfirstobject &= ",0"
+            If Not getsecondobject.Contains(",") Then getsecondobject &= ",0"
+
+            Try
+                If Double.Parse(getfirstobject) > Double.Parse(getsecondobject) Then
+                    Return "1"
+                Else
+                    Return "0"
+                End If
+            Catch ex As FormatException
+                'pup error cause one or multiple values are not in a correct format
                 Return "0"
-            End If
+            End Try
+
 
         Else
             Return ""

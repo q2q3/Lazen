@@ -222,7 +222,7 @@ Public Class FormatConverters
                     Dim realIConvert As String = RemoveQuotes(realI)
                     finalOutput += realIConvert
 
-                ElseIf realI.StartsWith("&") Then
+                ElseIf realI.StartsWith("&") Or realI.StartsWith("%") AndAlso realI.Contains("&") Then
 
                     Dim getFunctionCallName As String = FormatConverters.removeSpacesAtBeginningAndEnd(realI.Substring(1).Substring(0, realI.IndexOf("(") - 1)).ToLower
 
@@ -256,6 +256,9 @@ Public Class FormatConverters
 
 
                         Dim UserArgumentsList As New List(Of String)
+                        Dim waitNumber As Long = 0
+                        Dim strPrecedent As String = ""
+                        Dim testedPercentage As Boolean = False
 
                         For Each i2Original As String In UserArguments.Replace("::", "{separator_of_args}").Split("{separator_of_args}")
                             Dim i2 As String = i2Original
@@ -264,8 +267,51 @@ Public Class FormatConverters
                                 If removeSpacesAtBeginningAndEnd(i2).StartsWith("separator_of_args}") Then
                                     i2 = i2.Substring(18)
                                 End If
-                                UserArgumentsList.Add(removeSpacesAtBeginningAndEnd(i2))
+                            End If
+                            MsgBox("i2: " & i2 & " / percentage : " & testedPercentage)
+                            If Not testedPercentage Then
+                                testedPercentage = True
+                                If i2.StartsWith("%") Then
+                                    strPrecedent = i2
+                                    waitNumber = 0 '''''''''''''''''''''''''''''''''''
+                                    For Each countPercentages As String In i2
+                                        If countPercentages = "%" Then
+                                            waitNumber += 1
+                                        Else
+                                            Exit For
+                                        End If
+                                    Next
+                                End If
+                            Else
+                                If waitNumber > 0 Then
+                                    strPrecedent &= "::" & i2
+                                    waitNumber -= 1
+                                End If
+                            End If
 
+
+
+                            If waitNumber = 0 Then
+                                testedPercentage = False
+                                If strPrecedent <> "" Then
+                                    Dim indexOfEndOfSpaces As Long = 0
+
+                                    For Each removeSpaces As String In strPrecedent
+                                        If removeSpaces <> "%" Then
+                                            Exit For
+                                        End If
+                                        indexOfEndOfSpaces += 1
+                                    Next
+
+                                    Dim removeSpacesStrPRECEDENT As String = strPrecedent.Substring(indexOfEndOfSpaces)
+                                    MsgBox("removespacesStrPrecedent: " & removeSpacesStrPRECEDENT)
+                                    UserArgumentsList.Add(removeSpacesStrPRECEDENT)
+                                    waitNumber = 0
+                                    strPrecedent = ""
+                                    testedPercentage = False
+                                Else
+                                    UserArgumentsList.Add(removeSpacesAtBeginningAndEnd(i2))
+                                End If
                             End If
                         Next
 
